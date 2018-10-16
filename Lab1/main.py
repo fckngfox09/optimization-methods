@@ -1,7 +1,5 @@
 import numpy as np
 import sympy as sp
-from sympy.abc import x
-import math as m
 import matplotlib.pyplot as plt
 
 
@@ -249,7 +247,6 @@ def main():
     print('Производная ', f_diff)
     print('Метод средней точки ', middlePoint(func, f_diff, start, end, epsilon))
 
-    plt.figure()
 
 
 if __name__ == "__main__":
