@@ -146,10 +146,10 @@ def parabole(func, start, end, epsilon):
     x0, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
 
     while True:
-        x1, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
-        delta = np.abs((x0 - x1))
-        x0 = x1
-        if delta <= epsilon:
+        x_iter, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
+        delta = np.abs((x0 - x_iter))
+        x0 = x_iter
+        if np.abs(delta <= epsilon):
             break
 
     return func(x0)
