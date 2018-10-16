@@ -182,8 +182,15 @@ def onParabole(func, x1, x2, x3, f1, f2, f3):
 def middlePoint(func, f_diff, start, end, epsilon):
     a = start
     b = end
+    x_sym = sp.symbols('x')
 
-    df, x0 = on_middle_point(f_diff, a, b)
+    left_diff = f_diff.subs(x_sym, a)
+    right_diff = f_diff.subs(x_sym, b)
+
+    if not ((left_diff > 0 > right_diff) or (right_diff > 0 > left_diff)):
+        return 'На концах в производной одинаковые знаки.'
+
+    df, x0 = on_middle_point(f_diff, x_sym, a, b)
 
     while np.abs(df) > epsilon:
         if df > 0:
@@ -191,16 +198,15 @@ def middlePoint(func, f_diff, start, end, epsilon):
         else:
             a = x0
 
-        df, x1 = on_middle_point(f_diff, a, b)
+        df, x1 = on_middle_point(f_diff, x_sym, a, b)
         x0 = x1
 
     return func(x0)
 
 
-def on_middle_point(f_diff, start, end):
+def on_middle_point(f_diff, x_sym, start, end):
     a = start
     b = end
-    x_sym = sp.symbols('x')
 
     x_iter = (a + b) / 2
     df = f_diff.subs(x_sym, x_iter)
@@ -234,8 +240,8 @@ def main():
     # Отсюда начинаются методы, работающие через производные.
     # Как сделать это через lambda я не смог найти.
 
-    start = -10
-    end = 10
+    start = 0
+    end = 1
 
     x_sym = sp.symbols('x')
     # f_diff = sp.diff(x ** 4 + sp.exp(-x), x)
