@@ -1,4 +1,7 @@
 import numpy as np
+import sympy as sp
+from sympy.abc import x
+import math as m
 import matplotlib.pyplot as plt
 
 
@@ -82,6 +85,7 @@ def onDihotomy(func, start, end, delta, x1, y1, x2, y2):
 
     return x1, y1, x2, y2, epsilonN, a, b
 
+
 # Метод золотого сечения
 def goldenSectionMethod(func, start, end, epsilon):
     a = start
@@ -125,6 +129,7 @@ def onGoldenSectionMethod(func, start, end, x1, y1, x2, y2, tau):
 
     return a, b, x1, y1, x2, y2, epsilonN
 
+
 # Метод парабол
 def parabole(func, start, end, epsilon):
     a = start
@@ -142,14 +147,12 @@ def parabole(func, start, end, epsilon):
     x, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
 
     delta = 1
-    x_2 = 0
-    while delta > epsilon:
+    while delta >= epsilon:
         x_2, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
-        delta = np.abs((x_2 - x))
+        delta = np.abs((x - x_2))
         x = x_2
 
-    return func(x_2)
-
+    return func(x)
 
 
 def onParabole(func, x1, x2, x3, f1, f2, f3):
@@ -174,10 +177,47 @@ def onParabole(func, x1, x2, x3, f1, f2, f3):
 
     return x, x1, x2, x3, f1, f2, f3
 
+
+# Метод средней точки
+def middlePoint(func, start, end, epsilon):
+    a = start
+    b = end
+
+    # Как сделать это через lambda я не смог найти.
+    x = sp.symbols('x')
+    f_diff = sp.diff(x ** 4 + sp.exp(-x), x)
+    print('Производная ', f_diff)
+
+    f0, x_min = on_middle_point(f_diff, a, b)
+
+    while not np.abs(f0) <= epsilon:
+        if f0 > 0:
+            b = x_min
+        else:
+            a = x_min
+
+        f0, x_min = on_middle_point(f_diff, a, b)
+
+    return func(x_min)
+
+
+def on_middle_point(f_diff, start, end):
+
+
+    a = start
+    b = end
+    x = sp.symbols('x')
+
+    x_min = (a + b) / 2
+    f0 = f_diff.subs(x, x_min)
+
+    return f0, x_min
+
+
 def main():
     # func = (lambda x: x ** 4 + x ** 2 + x + 1)
     # func = (lambda x: x ** 2)
-    func = (lambda  x: x ** 4 + np.exp(-x))
+    func = (lambda x: x ** 4 + np.exp(-x))
     start = 0
 
     end = 1
@@ -193,6 +233,8 @@ def main():
     print('Метод золотого сечения', goldenSectionMethod(func, start, end, epsilon))
 
     print('Метод парабол', parabole(func, start, end, epsilon))
+
+    print('Метод средней точки ', middlePoint(func, start, end, epsilon))
 
 
 if __name__ == "__main__":
