@@ -125,6 +125,54 @@ def onGoldenSectionMethod(func, start, end, x1, y1, x2, y2, tau):
 
     return a, b, x1, y1, x2, y2, epsilonN
 
+# Метод парабол
+def parabole(func, start, end, epsilon):
+    a = start
+    c = end
+    b = (a + c) / 2
+
+    x1 = a
+    x2 = b
+    x3 = c
+
+    f1 = func(x1)
+    f2 = func(x2)
+    f3 = func(x3)
+
+    x, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
+
+    delta = 1
+    x_2 = 0
+    while delta > epsilon:
+        x_2, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
+        delta = np.abs((x_2 - x))
+        x = x_2
+
+    return func(x_2)
+
+
+
+def onParabole(func, x1, x2, x3, f1, f2, f3):
+    a0 = f1
+    a1 = (f2 - f1) / (x2 - x1)
+    a2 = (1 / (x3 - x2)) * ((f3 - f1) / (x3 - x1) - (f2 - f1) / (x2 - x1))
+
+    x = (1 / 2) * (x1 + x2 - (a1 / a2))
+
+    fx = func(x)
+
+    if x > x2 and fx > f2:
+        x3, f3 = x, fx
+    elif x > x2 and fx < f2:
+        x1, f1 = x2, f2
+        x2, f2 = x, fx
+    elif x < x2 and fx > f2:
+        x1, f1 = x, fx
+    elif x < x2 and fx < f2:
+        x3, f3 = x2, f2
+        x2, f2 = x, fx
+
+    return x, x1, x2, x3, f1, f2, f3
 
 def main():
     # func = (lambda x: x ** 4 + x ** 2 + x + 1)
@@ -143,6 +191,8 @@ def main():
     print('Дихотомия ', dihotomy(func, start, end, dihotomyDelta, epsilon))
 
     print('Метод золотого сечения', goldenSectionMethod(func, start, end, epsilon))
+
+    print('Метод парабол', parabole(func, start, end, epsilon))
 
 
 if __name__ == "__main__":
