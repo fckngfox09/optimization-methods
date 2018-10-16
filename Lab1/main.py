@@ -125,6 +125,7 @@ def main():
 
     end = 1
     epsilon = 0.1
+    print('Метод перебора ')
     bruteForce(func, start, end, epsilon)
     delta = 0.25
     print('Поразрядный поиск ', bitwiseSearch(func, start, end, delta, epsilon))
