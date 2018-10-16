@@ -185,41 +185,42 @@ def middlePoint(func, start, end, epsilon):
     b = end
 
     # Как сделать это через lambda я не смог найти.
-    x = sp.symbols('x')
+    x_sym = sp.symbols('x')
     # f_diff = sp.diff(x ** 4 + sp.exp(-x), x)
-    f_diff = sp.diff(x ** 4 + x ** 2 + x + 1, x)
+    f_diff = sp.diff(x_sym ** 4 + x_sym ** 2 + x_sym + 1, x_sym)
     print('Производная ', f_diff)
 
-    df, x_min = on_middle_point(f_diff, a, b)
+    df, x0 = on_middle_point(f_diff, a, b)
 
-    while not np.abs(df) < epsilon:
+    while np.abs(df) > epsilon:
         if df > 0:
-            b = x_min
+            b = x0
         else:
-            a = x_min
+            a = x0
 
-        df, x_min = on_middle_point(f_diff, a, b)
+        df, x1 = on_middle_point(f_diff, a, b)
+        x0 = x1
 
-    return func(x_min)
+    return func(x0)
 
 
 def on_middle_point(f_diff, start, end):
     a = start
     b = end
-    x = sp.symbols('x')
+    x_sym = sp.symbols('x')
 
-    x_min = (a + b) / 2
-    df = f_diff.subs(x, x_min)
+    x_iter = (a + b) / 2
+    df = f_diff.subs(x_sym, x_iter)
 
-    return df, x_min
+    return df, x_iter
 
 
 def main():
     func = (lambda x: x ** 4 + x ** 2 + x + 1)
     # func = (lambda x: x ** 2)
-    # func = (lambda x: x ** 4 + np.exp(-x))
-    start = 0
-    end = 5
+    func_from_methodic = (lambda x: x ** 4 + np.exp(-x))
+    start = -1
+    end = 1
     epsilon = 0.0001
 
     print('Метод перебора ', bruteForce(func, start, end, epsilon))
@@ -234,8 +235,7 @@ def main():
 
     print('Метод парабол', parabole(func, start, end, epsilon))
 
-    middlePointEpsilon = 0.02
-    print('Метод средней точки ', middlePoint(func, start, end, middlePointEpsilon))
+    print('Метод средней точки ', middlePoint(func, start, end, epsilon))
 
     plt.figure()
 
