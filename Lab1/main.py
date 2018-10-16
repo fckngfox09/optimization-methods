@@ -11,7 +11,7 @@ def bruteForce(func, start, end, epsilon):
     y = func(x)
 
     minimum = np.min(y)
-    print(minimum)
+    return minimum
 
 
 # Поразрядный поиск
@@ -22,12 +22,12 @@ def bitwiseSearch(func, start, end, delta, epsilon):
     y = func(start)
 
     while np.abs(d * 4) > epsilon:
-        a, b, d, y = onBitwiseSearch(func, a, b, d, epsilon, y)
+        a, b, d, y = onBitwiseSearch(func, a, b, d, y)
 
     return y
 
 
-def onBitwiseSearch(func, start, end, delta, epsilon, old_Y):
+def onBitwiseSearch(func, start, end, delta, old_Y):
     a = start
     b = end
     y = old_Y
@@ -57,14 +57,14 @@ def dihotomy(func, start, end, delta, epsilon):
     epsilonN = (b - a) / 2
 
     while epsilonN > epsilon:
-        x1, y1, x2, y2, epsilonN, a, b = onDihotomy(func, a, b, delta, epsilon, x1, y1, x2, y2)
+        x1, y1, x2, y2, epsilonN, a, b = onDihotomy(func, a, b, delta, x1, y1, x2, y2)
 
     xResult = (a + b) / 2
     funcResult = func(xResult)
     return funcResult
 
 
-def onDihotomy(func, start, end, delta, epsilon, x1, y1, x2, y2):
+def onDihotomy(func, start, end, delta, x1, y1, x2, y2):
     a = start
     b = end
 
@@ -97,14 +97,14 @@ def goldenSectionMethod(func, start, end, epsilon):
     epsilonN = (b - a) / 2
 
     while epsilonN > epsilon:
-        a, b, x1, y1, x2, y2, epsilonN = onGoldenSectionMethod(func, a, b, epsilon, x1, y1, x2, y2, tau)
+        a, b, x1, y1, x2, y2, epsilonN = onGoldenSectionMethod(func, a, b, x1, y1, x2, y2, tau)
 
     xResult = (a + b) / 2
     yResult = func(xResult)
     return yResult
 
 
-def onGoldenSectionMethod(func, start, end, epsilon, x1, y1, x2, y2, tau):
+def onGoldenSectionMethod(func, start, end, x1, y1, x2, y2, tau):
     a = start
     b = end
 
@@ -134,8 +134,7 @@ def main():
 
     end = 1
     epsilon = 0.0001
-    print('Метод перебора ')
-    bruteForce(func, start, end, epsilon)
+    print('Метод перебора ', bruteForce(func, start, end, epsilon))
 
     delta = 0.005
     print('Поразрядный поиск ', bitwiseSearch(func, start, end, delta, epsilon))
