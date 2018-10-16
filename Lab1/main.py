@@ -54,7 +54,14 @@ def dihotomy(func, start, end, delta, epsilon):
     y1 = func(x1)
     y2 = func(x2)
 
-    return onDihotomy(func, a, b, delta, epsilon, x1, y1, x2, y2)
+    epsilonN = (b - a) / 2
+
+    while epsilonN > epsilon:
+        x1, y1, x2, y2, epsilonN, a, b = onDihotomy(func, a, b, delta, epsilon, x1, y1, x2, y2)
+
+    xResult = (a + b) / 2
+    funcResult = func(xResult)
+    return funcResult
 
 
 def onDihotomy(func, start, end, delta, epsilon, x1, y1, x2, y2):
@@ -66,19 +73,14 @@ def onDihotomy(func, start, end, delta, epsilon, x1, y1, x2, y2):
     else:
         a = x1
 
-    epsilonN = (b - a) / 2
+    epsilonN = ((b - a) / 2)
 
-    if epsilonN > epsilon:
-        x1 = (b + a - delta) / 2
-        x2 = (b + a + delta) / 2
-        y1 = func(x1)
-        y2 = func(x2)
-        return onDihotomy(func, a, b, delta, epsilon, x1, y1, x2, y2)
-    else:
-        xResult = (a + b) / 2
-        funcResult = func(xResult)
-        return funcResult
+    x1 = (b + a - delta) / 2
+    x2 = (b + a + delta) / 2
+    y1 = func(x1)
+    y2 = func(x2)
 
+    return x1, y1, x2, y2, epsilonN, a, b
 
 # Метод золотого сечения
 def goldenSectionMethod(func, start, end, epsilon):
@@ -129,13 +131,14 @@ def main():
     start = 0
 
     end = 1
-    epsilon = 0.001
+    epsilon = 0.0001
     print('Метод перебора ')
     bruteForce(func, start, end, epsilon)
-    delta = 0.25
+
+    delta = 0.005
     print('Поразрядный поиск ', bitwiseSearch(func, start, end, delta, epsilon))
 
-    dihotomyDelta = 0.02
+    dihotomyDelta = 0.00005
     print('Дихотомия ', dihotomy(func, start, end, dihotomyDelta, epsilon))
 
     print('Метод золотого сечения', goldenSectionMethod(func, start, end, epsilon))
