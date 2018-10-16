@@ -16,26 +16,31 @@ def bruteForce(func, start, end, epsilon):
 
 # Поразрядный поиск
 def bitwiseSearch(func, start, end, delta, epsilon):
+    a = start
+    b = end
+    d = delta
     y = func(start)
-    return onBitwiseSearch(func, start, end, delta, epsilon, y)
+
+    while np.abs(d * 4) > epsilon:
+        a, b, d, y = onBitwiseSearch(func, a, b, d, epsilon, y)
+
+    return y
 
 
 def onBitwiseSearch(func, start, end, delta, epsilon, old_Y):
     a = start
     b = end
     y = old_Y
-    while np.abs((delta * 4)) > epsilon:
-        a += delta
-        y2 = func(a)
-        if y2 < y:
-            y = y2
-        else:
-            a = y2
-            b = y
-            delta /= -4
-            return onBitwiseSearch(func, a, b, delta, epsilon, y)
+    a += delta
+    y2 = func(a)
+    if y2 < y:
+        y = y2
+    else:
+        a = y2
+        b = y
+        delta /= -4
 
-    return y
+    return a, b, delta, y
 
 
 # Дихотомия
@@ -118,13 +123,13 @@ def onGoldenSectionMethod(func, start, end, epsilon, x1, y1, x2, y2, tau):
 
 
 def main():
-    func = (lambda x: x ** 4 + x ** 2 + x + 1)
+    # func = (lambda x: x ** 4 + x ** 2 + x + 1)
     # func = (lambda x: x ** 2)
-    # func = (lambda  x: x ** 4 + np.exp(-x))
+    func = (lambda  x: x ** 4 + np.exp(-x))
     start = 0
 
     end = 1
-    epsilon = 0.1
+    epsilon = 0.001
     print('Метод перебора ')
     bruteForce(func, start, end, epsilon)
     delta = 0.25
