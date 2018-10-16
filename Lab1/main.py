@@ -185,7 +185,7 @@ def middlePoint(func, f_diff, start, end, epsilon):
     left_diff = f_diff.subs(x_sym, a)
     right_diff = f_diff.subs(x_sym, b)
 
-    if not ((left_diff > 0 > right_diff) or (right_diff > 0 > left_diff)):
+    if not (left_diff * right_diff < 0):
         return 'На концах в производной одинаковые знаки.'
 
     df, x0 = on_middle_point(f_diff, x_sym, a, b)
@@ -212,8 +212,41 @@ def on_middle_point(f_diff, x_sym, start, end):
     return df, x_iter
 
 
-def chord_method():
-    return
+def chord_method(func, f_diff, start, end, epsilon):
+    a = start
+    b = end
+
+    x_sym = sp.symbols('x')
+    left_diff = f_diff.subs(x_sym, a)
+    right_diff = f_diff.subs(x_sym, b)
+
+    if not (left_diff * right_diff < 0):
+        return 'На концах в производной одинаковые знаки'
+
+    x0, y0 = on_chord_method(f_diff, x_sym, a, b)
+
+    while np.abs(y0) > epsilon:
+        if y0 > 0:
+            b = x0
+        else:
+            a = x0
+
+        x_iter, y_iter = on_chord_method(f_diff, x_sym, a, b)
+        x0 = x_iter
+        y0 = y_iter
+
+    return func(x0)
+
+
+def on_chord_method(f_diff, x_sym, start, end):
+    a = start
+    b = end
+
+    x_iter = a - (f_diff.subs(x_sym, a) * (a - b)) / (f_diff.subs(x_sym, a) - f_diff.subs(x_sym, b))
+
+    y_iter = f_diff.subs(x_sym, x_iter)
+
+    return float(x_iter), float(y_iter)
 
 
 def main():
@@ -221,7 +254,7 @@ def main():
     # func = (lambda x: x ** 4 + np.exp(-x))
     start = -1
     end = 1
-    epsilon = 0.001
+    epsilon = 0.0001
 
     print('Метод перебора ', bruteForce(func, start, end, epsilon))
 
@@ -238,7 +271,7 @@ def main():
     # Отсюда начинаются методы, работающие через производные.
     # Как сделать это через lambda я не смог найти.
 
-    start = 0
+    start = -1
     end = 1
 
     x_sym = sp.symbols('x')
@@ -246,7 +279,7 @@ def main():
     f_diff = sp.diff(x_sym ** 4 + x_sym ** 2 + x_sym + 1, x_sym)
     print('Производная ', f_diff)
     print('Метод средней точки ', middlePoint(func, f_diff, start, end, epsilon))
-
+    print('Метод хорд', chord_method(func, f_diff, start, end, epsilon))
 
 
 if __name__ == "__main__":
