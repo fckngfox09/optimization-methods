@@ -94,34 +94,36 @@ def goldenSectionMethod(func, start, end, epsilon):
     y2 = func(x2)
 
     tau = (np.sqrt(5) - 1) / 2
+    epsilonN = (b - a) / 2
 
-    return onGoldenSectionMethod(func, a, b, epsilon, x1, y1, x2, y2, tau)
+    while epsilonN > epsilon:
+        a, b, x1, y1, x2, y2, epsilonN = onGoldenSectionMethod(func, a, b, epsilon, x1, y1, x2, y2, tau)
+
+    xResult = (a + b) / 2
+    yResult = func(xResult)
+    return yResult
 
 
 def onGoldenSectionMethod(func, start, end, epsilon, x1, y1, x2, y2, tau):
     a = start
     b = end
-    epsilonN = (b - a) / 2
 
-    if epsilonN > epsilon:
-        if y1 <= y2:
-            b = x2
-            x2 = x1
-            y2 = y1
-            x1 = b - (tau * (b - a))
-            y1 = func(x1)
-        else:
-            a = x1
-            x1 = x2
-            y1 = y2
-            x2 = b - ((1 - tau) * (b - a))
-            y2 = func(x2)
-        epsilonN = tau * ((b - a) / 2)
-        return onGoldenSectionMethod(func, a, b, epsilon, x1, y1, x2, y2, tau)
+    if y1 <= y2:
+        b = x2
+        x2 = x1
+        y2 = y1
+        x1 = b - (tau * (b - a))
+        y1 = func(x1)
     else:
-        xResult = (a + b) / 2
-        yResult = func(xResult)
-        return yResult
+        a = x1
+        x1 = x2
+        y1 = y2
+        x2 = b - ((1 - tau) * (b - a))
+        y2 = func(x2)
+
+    epsilonN = tau * ((b - a) / 2)
+
+    return a, b, x1, y1, x2, y2, epsilonN
 
 
 def main():
