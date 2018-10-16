@@ -133,12 +133,11 @@ def onGoldenSectionMethod(func, start, end, x1, y1, x2, y2, tau):
 # Метод парабол
 def parabole(func, start, end, epsilon):
     a = start
-    c = end
-    b = (a + c) / 2
+    b = end
 
     x1 = a
-    x2 = b
-    x3 = c
+    x2 = (a + b) / 2
+    x3 = b
 
     f1 = func(x1)
     f2 = func(x2)
@@ -150,7 +149,7 @@ def parabole(func, start, end, epsilon):
         x1, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
         delta = np.abs((x0 - x1))
         x0 = x1
-        if delta > epsilon:
+        if delta <= epsilon:
             break
 
     return func(x0)
@@ -180,15 +179,9 @@ def onParabole(func, x1, x2, x3, f1, f2, f3):
 
 
 # Метод средней точки
-def middlePoint(func, start, end, epsilon):
+def middlePoint(func, f_diff, start, end, epsilon):
     a = start
     b = end
-
-    # Как сделать это через lambda я не смог найти.
-    x_sym = sp.symbols('x')
-    # f_diff = sp.diff(x ** 4 + sp.exp(-x), x)
-    f_diff = sp.diff(x_sym ** 4 + x_sym ** 2 + x_sym + 1, x_sym)
-    print('Производная ', f_diff)
 
     df, x0 = on_middle_point(f_diff, a, b)
 
@@ -215,13 +208,16 @@ def on_middle_point(f_diff, start, end):
     return df, x_iter
 
 
+def chord_method():
+    return
+
+
 def main():
     func = (lambda x: x ** 4 + x ** 2 + x + 1)
-    # func = (lambda x: x ** 2)
-    func_from_methodic = (lambda x: x ** 4 + np.exp(-x))
+    # func = (lambda x: x ** 4 + np.exp(-x))
     start = -1
     end = 1
-    epsilon = 0.0001
+    epsilon = 0.001
 
     print('Метод перебора ', bruteForce(func, start, end, epsilon))
 
@@ -235,7 +231,17 @@ def main():
 
     print('Метод парабол', parabole(func, start, end, epsilon))
 
-    print('Метод средней точки ', middlePoint(func, start, end, epsilon))
+    # Отсюда начинаются методы, работающие через производные.
+    # Как сделать это через lambda я не смог найти.
+
+    start = -10
+    end = 10
+
+    x_sym = sp.symbols('x')
+    # f_diff = sp.diff(x ** 4 + sp.exp(-x), x)
+    f_diff = sp.diff(x_sym ** 4 + x_sym ** 2 + x_sym + 1, x_sym)
+    print('Производная ', f_diff)
+    print('Метод средней точки ', middlePoint(func, f_diff, start, end, epsilon))
 
     plt.figure()
 
