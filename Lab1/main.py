@@ -146,11 +146,12 @@ def parabole(func, start, end, epsilon):
 
     x0, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
 
-    delta = 1
-    while delta > epsilon:
+    while True:
         x1, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
         delta = np.abs((x0 - x1))
         x0 = x1
+        if delta > epsilon:
+            break
 
     return func(x0)
 
@@ -214,9 +215,9 @@ def on_middle_point(f_diff, start, end):
 
 
 def main():
-    # func = (lambda x: x ** 4 + x ** 2 + x + 1)
+    func = (lambda x: x ** 4 + x ** 2 + x + 1)
     # func = (lambda x: x ** 2)
-    func = (lambda x: x ** 4 + np.exp(-x))
+    # func = (lambda x: x ** 4 + np.exp(-x))
     start = 0
     end = 5
     epsilon = 0.0001
