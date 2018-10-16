@@ -144,23 +144,23 @@ def parabole(func, start, end, epsilon):
     f2 = func(x2)
     f3 = func(x3)
 
-    x, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
+    x0, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
 
     delta = 1
-    while delta >= epsilon:
-        x_2, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
-        delta = np.abs((x - x_2))
-        x = x_2
+    while delta > epsilon:
+        x1, x1, x2, x3, f1, f2, f3 = onParabole(func, x1, x2, x3, f1, f2, f3)
+        delta = np.abs((x0 - x1))
+        x0 = x1
 
-    return func(x)
+    return func(x0)
 
 
 def onParabole(func, x1, x2, x3, f1, f2, f3):
     a0 = f1
     a1 = (f2 - f1) / (x2 - x1)
-    a2 = (1 / (x3 - x2)) * ((f3 - f1) / (x3 - x1) - (f2 - f1) / (x2 - x1))
+    a2 = ((f3 - f1) / (x3 - x1) - (f2 - f1) / (x2 - x1)) / (x3 - x2)
 
-    x = (1 / 2) * (x1 + x2 - (a1 / a2))
+    x = (x1 + x2 - a1 / a2) / 2
 
     fx = func(x)
 
@@ -185,33 +185,32 @@ def middlePoint(func, start, end, epsilon):
 
     # Как сделать это через lambda я не смог найти.
     x = sp.symbols('x')
-    f_diff = sp.diff(x ** 4 + sp.exp(-x), x)
+    # f_diff = sp.diff(x ** 4 + sp.exp(-x), x)
+    f_diff = sp.diff(x ** 4 + x ** 2 + x + 1, x)
     print('Производная ', f_diff)
 
-    f0, x_min = on_middle_point(f_diff, a, b)
+    df, x_min = on_middle_point(f_diff, a, b)
 
-    while not np.abs(f0) <= epsilon:
-        if f0 > 0:
+    while not np.abs(df) < epsilon:
+        if df > 0:
             b = x_min
         else:
             a = x_min
 
-        f0, x_min = on_middle_point(f_diff, a, b)
+        df, x_min = on_middle_point(f_diff, a, b)
 
     return func(x_min)
 
 
 def on_middle_point(f_diff, start, end):
-
-
     a = start
     b = end
     x = sp.symbols('x')
 
     x_min = (a + b) / 2
-    f0 = f_diff.subs(x, x_min)
+    df = f_diff.subs(x, x_min)
 
-    return f0, x_min
+    return df, x_min
 
 
 def main():
@@ -219,9 +218,9 @@ def main():
     # func = (lambda x: x ** 2)
     func = (lambda x: x ** 4 + np.exp(-x))
     start = 0
-
-    end = 1
+    end = 5
     epsilon = 0.0001
+
     print('Метод перебора ', bruteForce(func, start, end, epsilon))
 
     delta = 0.005
@@ -234,7 +233,10 @@ def main():
 
     print('Метод парабол', parabole(func, start, end, epsilon))
 
-    print('Метод средней точки ', middlePoint(func, start, end, epsilon))
+    middlePointEpsilon = 0.02
+    print('Метод средней точки ', middlePoint(func, start, end, middlePointEpsilon))
+
+    plt.figure()
 
 
 if __name__ == "__main__":
