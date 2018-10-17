@@ -56,7 +56,8 @@ def main():
     y_min = chord.count(func, f_diff, start, end, epsilon)
     print('Метод хорд', y_min)
 
-    print('Метод Ньютона', newton.count(func, f_diff, start, end, epsilon))
+    y_min = newton.count(func, f_diff, start, end, epsilon)
+    print('Метод Ньютона', y_min)
 
 
 if __name__ == "__main__":
