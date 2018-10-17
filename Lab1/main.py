@@ -14,6 +14,7 @@ import parabole
 import middle_point
 import chord
 import newton
+import difference_network
 
 sns.set()
 
@@ -68,19 +69,89 @@ def main():
     end = 1
 
     x_sym = sp.symbols('x')
-    f_diff = sp.diff(x_sym ** 4 + sp.exp(-x_sym), x_sym)
+
+    f = x_sym ** 4 + sp.exp(-x_sym)
+
+    f_diff = sp.diff(f, x_sym)
     # f_diff = sp.diff(x_sym ** 4 + x_sym ** 2 + x_sym + 1, x_sym)
     print('Производная ', f_diff)
 
-    y_min, iter_count = middle_point.count(func, f_diff, start, end, epsilon)
+    y_min, iter_count = middle_point.count(f, start, end, epsilon)
     print('Метод средней точки ', y_min)
     print('Количество итераций ', iter_count)
 
-    y_min, iter_count = chord.count(func, f_diff, start, end, epsilon)
+    y_min, iter_count = chord.count(f, start, end, epsilon)
     print('Метод хорд', y_min)
     print('Количество итераций ', iter_count)
 
-    y_min, iter_count = newton.count(func, f_diff, start, end, epsilon, show_chart=True)
+    y_min, iter_count = newton.count(f, start, end, epsilon)
+    print('Метод Ньютона', y_min)
+    print('Количество итераций ', iter_count)
+
+    # ЦЕНТРАЛЬНАЯ РАЗНОСТЬ
+    print('ЦЕНТРАЛЬНАЯ РАЗНОСТЬ')
+
+    y_min, iter_count = middle_point.count(f, start, end, epsilon, f_diff_method=difference_network.central_network)
+    print('Метод средней точки ', y_min)
+    print('Количество итераций ', iter_count)
+
+    y_min, iter_count = chord.count(f, start, end, epsilon, f_diff_method=difference_network.central_network)
+    print('Метод хорд', y_min)
+    print('Количество итераций ', iter_count)
+
+    y_min, iter_count = \
+        newton.count(
+            f,
+            start,
+            end,
+            epsilon,
+            f_diff_method=difference_network.central_network,
+            f_diff_diff_method=difference_network.central_network_second)
+
+    print('Метод Ньютона', y_min)
+    print('Количество итераций ', iter_count)
+
+    # ЛЕВАЯ РАЗНОСТЬ
+    print('ЛЕВАЯ РАЗНОСТЬ')
+
+    y_min, iter_count = middle_point.count(f, start, end, epsilon, f_diff_method=difference_network.left_network)
+    print('Метод средней точки ', y_min)
+    print('Количество итераций ', iter_count)
+
+    y_min, iter_count = chord.count(f, start, end, epsilon, f_diff_method=difference_network.left_network)
+    print('Метод хорд', y_min)
+    print('Количество итераций ', iter_count)
+
+    y_min, iter_count = \
+        newton.count(
+            f,
+            start,
+            end,
+            epsilon,
+            f_diff_method=difference_network.left_network,
+            f_diff_diff_method=difference_network.central_network_second)
+    print('Метод Ньютона', y_min)
+    print('Количество итераций ', iter_count)
+
+    # ПРАВАЯ РАЗНОСТЬ
+    print('ПРАВАЯ РАЗНОСТЬ')
+
+    y_min, iter_count = middle_point.count(f, start, end, epsilon, f_diff_method=difference_network.right_network)
+    print('Метод средней точки ', y_min)
+    print('Количество итераций ', iter_count)
+
+    y_min, iter_count = chord.count(f, start, end, epsilon, f_diff_method=difference_network.right_network)
+    print('Метод хорд', y_min)
+    print('Количество итераций ', iter_count)
+
+    y_min, iter_count = \
+        newton.count(
+            f,
+            start,
+            end,
+            epsilon,
+            f_diff_method=difference_network.right_network,
+            f_diff_diff_method=difference_network.central_network_second)
     print('Метод Ньютона', y_min)
     print('Количество итераций ', iter_count)
 
