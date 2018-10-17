@@ -1,11 +1,12 @@
 import numpy as np
 import sympy as sp
+import matplotlib.pyplot as plt
 
 
 #
 # Метод хорд
 #
-def count(func, f_diff, start, end, epsilon):
+def count(func, f_diff, start, end, epsilon, show_chart=False):
     a = start
     b = end
 
@@ -29,6 +30,9 @@ def count(func, f_diff, start, end, epsilon):
         x0 = x_iter
         y0 = y_iter
         iter_count += 1
+
+        if show_chart:
+            plt.plot([a, b], [func(a), func(b)])
 
     return func(x0), iter_count
 

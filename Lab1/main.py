@@ -72,12 +72,11 @@ def main():
     # f_diff = sp.diff(x_sym ** 4 + x_sym ** 2 + x_sym + 1, x_sym)
     print('Производная ', f_diff)
 
-    y_min, iter_count = middle_point.count(func, f_diff, start, end, epsilon, show_chart=True)
+    y_min, iter_count = middle_point.count(func, f_diff, start, end, epsilon)
     print('Метод средней точки ', y_min)
     print('Количество итераций ', iter_count)
-    plt.show()
 
-    y_min, iter_count = chord.count(func, f_diff, start, end, epsilon)
+    y_min, iter_count = chord.count(func, f_diff, start, end, epsilon, show_chart=True)
     print('Метод хорд', y_min)
     print('Количество итераций ', iter_count)
 
