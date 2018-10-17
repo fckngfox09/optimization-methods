@@ -52,11 +52,11 @@ def main():
     y_min, iter_count = dihotomy.count(func, start, end, dihotomy_delta, epsilon)
     print('Дихотомия ', y_min)
     print('Количество итераций ', iter_count)
-    plt.show()
 
     y_min, iter_count = golden_section.count(func, start, end, epsilon)
     print('Метод золотого сечения', y_min)
     print('Количество итераций ', iter_count)
+    plt.show()
 
     y_min, iter_count = parabole.count(func, start, end, epsilon)
     print('Метод парабол', y_min)
