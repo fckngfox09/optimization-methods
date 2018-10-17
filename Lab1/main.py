@@ -3,6 +3,7 @@
 import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 #  Мои модули
 import bitwise
@@ -14,6 +15,21 @@ import middle_point
 import chord
 import newton
 
+sns.set()
+
+
+# Построить график функции
+def plot_func(func, start, end):
+    plt.figure()
+
+    cuts = 1000
+    x_arr = np.linspace(start, end, cuts)
+
+    plt.plot(x_arr, func(x_arr))
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.grid(True)
+
 
 def main():
     # func = (lambda x: x ** 4 + x ** 2 + x + 1)
@@ -21,14 +37,17 @@ def main():
     start = -1
     end = 1
     epsilon = 0.0001
+    plot_func(func, start, end)
 
+    epsilon_for_showing = 0.1
     y_min = brute_force.count(func, start, end, epsilon)
     print('Метод перебора ', y_min)
 
-    delta = 0.005
+    delta = 0.25
     y_min, iter_count = bitwise.count(func, start, end, delta, epsilon)
     print('Поразрядный поиск ', y_min)
     print('Количество итераций ', iter_count)
+    plt.show()
 
     dihotomy_delta = 0.00005
     y_min, iter_count = dihotomy.count(func, start, end, dihotomy_delta, epsilon)

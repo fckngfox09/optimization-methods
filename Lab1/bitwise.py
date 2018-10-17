@@ -1,32 +1,37 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 # Поразрядный поиск
 def count(func, start, end, delta, epsilon):
-    a = start
-    b = end
-    d = delta
-    y = func(start)
+    x = start
+    y = func(x)
 
+    x_old = x
+    y_old = y
     iter_count = 0
-    while np.abs(d * 4) > epsilon:
-        a, b, d, y = on_count(func, a, b, d, y)
-        iter_count += 1
+
+    mul_const = -4
+
+    while np.abs(delta * mul_const) > epsilon:
+        x, y, iter_count = on_count(func, x, delta, y, iter_count)
+        plt.plot([x_old, x], [y_old, y])
+        x_old = x
+        y_old = y
+        delta /= mul_const
 
     return y, iter_count
 
 
-def on_count(func, start, end, delta, old_Y):
-    a = start
-    b = end
-    y = old_Y
-    a += delta
-    y2 = func(a)
-    if y2 < y:
-        y = y2
-    else:
-        a = y2
-        b = y
-        delta /= -4
+def on_count(func, x, delta, y_old, iter_count):
+    x += delta
+    y_new = func(x)
+    iter_count += 1
 
-    return a, b, delta, y
+    while y_new < y_old:
+        y_old = y_new
+        x += delta
+        y_new = func(x)
+        iter_count += 1
+
+    return x, y_new, iter_count
