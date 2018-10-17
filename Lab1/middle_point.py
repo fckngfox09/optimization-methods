@@ -18,19 +18,18 @@ def count(func, f_diff, start, end, epsilon, show_chart=False):
     df, x0 = on_count(f_diff, x_sym, a, b)
 
     iter_count = 1
-    step = 0.25
+    step = 0.2
     while np.abs(df) > epsilon:
         if df > 0:
             b = x0
         else:
             a = x0
 
-        x_p = np.linspace(x0 + step, x0 - step, 200)
-
         df, x1 = on_count(f_diff, x_sym, a, b)
 
         if show_chart:
-            plt.plot(x_p, df * (x_p - x0) + func(x0))
+            x_p = np.linspace(x1 - step, x1 + step, 200)
+            plt.plot(x_p, df * (x_p - x1) + func(x1))
 
         x0 = x1
         iter_count += 1
