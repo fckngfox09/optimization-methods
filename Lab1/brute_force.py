@@ -10,10 +10,10 @@ def count(func, start, end, epsilon, show_chart=False):
     x = np.linspace(a, b, n)
     y = func(x)
 
-    if show_chart:
-        plt.scatter(x, y, color='c')
-
     min_index = np.argmin(y)
 
-    plt.scatter(x[min_index], y[min_index], color='red')
+    if show_chart:
+        plt.scatter(x, y, color='c')
+        plt.scatter(x[min_index], y[min_index], color='red')
+
     return y[min_index]

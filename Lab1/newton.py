@@ -1,11 +1,12 @@
 import sympy as sp
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 #
 # Метод Ньютона
 #
-def count(func, f_diff, start, end, epsilon):
+def count(func, f_diff, start, end, epsilon, show_chart=False):
     a = start
     b = end
     x_sym = sp.symbols('x')
@@ -20,6 +21,10 @@ def count(func, f_diff, start, end, epsilon):
 
     iter_count = 0
     while np.abs(df) > epsilon:
+
+        if show_chart:
+            plt.scatter(x0, func(x0), color='red')
+
         f_diff_diff = sp.diff(f_diff, x_sym)
         dff = float(f_diff_diff.subs(x_sym, x0))
         x0 -= float(df) / float(dff)

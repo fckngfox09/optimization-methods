@@ -76,11 +76,11 @@ def main():
     print('Метод средней точки ', y_min)
     print('Количество итераций ', iter_count)
 
-    y_min, iter_count = chord.count(func, f_diff, start, end, epsilon, show_chart=True)
+    y_min, iter_count = chord.count(func, f_diff, start, end, epsilon)
     print('Метод хорд', y_min)
     print('Количество итераций ', iter_count)
 
-    y_min, iter_count = newton.count(func, f_diff, start, end, epsilon)
+    y_min, iter_count = newton.count(func, f_diff, start, end, epsilon, show_chart=True)
     print('Метод Ньютона', y_min)
     print('Количество итераций ', iter_count)
 
