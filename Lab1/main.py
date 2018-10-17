@@ -33,8 +33,8 @@ def plot_func(func, start, end):
 
 
 def main():
-    # func = (lambda x: x ** 4 + x ** 2 + x + 1)
-    func = (lambda x: x ** 4 + np.exp(-x))
+    func = (lambda x: x ** 4 + x ** 2 + x + 1)
+    # func = (lambda x: x ** 4 + np.exp(-x))
     start = -1
     end = 1
     epsilon = 0.0001
@@ -70,7 +70,8 @@ def main():
 
     x_sym = sp.symbols('x')
 
-    f = x_sym ** 4 + sp.exp(-x_sym)
+    # f = x_sym ** 4 + sp.exp(-x_sym)
+    f = x_sym ** 4 + x_sym ** 2 + x_sym + 1
 
     f_diff = sp.diff(f, x_sym)
     # f_diff = sp.diff(x_sym ** 4 + x_sym ** 2 + x_sym + 1, x_sym)
