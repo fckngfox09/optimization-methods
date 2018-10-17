@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+
+
 # Дихотомия
 def count(func, start, end, delta, epsilon):
     a = start
@@ -15,6 +18,7 @@ def count(func, start, end, delta, epsilon):
     while epsilon_n > epsilon:
         x1, y1, x2, y2, epsilon_n, a, b = on_count(func, a, b, delta, x1, y1, x2, y2)
         iter_count += 1
+        plt.plot([a, b], [func(a), func(b)])
 
     x_result = (a + b) / 2
     func_result = func(x_result)

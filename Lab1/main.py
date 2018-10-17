@@ -47,12 +47,12 @@ def main():
     y_min, iter_count = bitwise.count(func, start, end, delta, epsilon)
     print('Поразрядный поиск ', y_min)
     print('Количество итераций ', iter_count)
-    plt.show()
 
     dihotomy_delta = 0.00005
     y_min, iter_count = dihotomy.count(func, start, end, dihotomy_delta, epsilon)
     print('Дихотомия ', y_min)
     print('Количество итераций ', iter_count)
+    plt.show()
 
     y_min, iter_count = golden_section.count(func, start, end, epsilon)
     print('Метод золотого сечения', y_min)
