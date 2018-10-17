@@ -8,10 +8,12 @@ def count(func, start, end, delta, epsilon):
     d = delta
     y = func(start)
 
+    iter_count = 0
     while np.abs(d * 4) > epsilon:
         a, b, d, y = on_count(func, a, b, d, y)
+        iter_count += 1
 
-    return y
+    return y, iter_count
 
 
 def on_count(func, start, end, delta, old_Y):

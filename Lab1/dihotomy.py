@@ -1,6 +1,3 @@
-import numpy as np
-
-
 # Дихотомия
 def count(func, start, end, delta, epsilon):
     a = start
@@ -12,14 +9,17 @@ def count(func, start, end, delta, epsilon):
     y1 = func(x1)
     y2 = func(x2)
 
-    epsilonN = (b - a) / 2
+    epsilon_n = (b - a) / 2
 
-    while epsilonN > epsilon:
-        x1, y1, x2, y2, epsilonN, a, b = on_count(func, a, b, delta, x1, y1, x2, y2)
+    iter_count = 1
+    while epsilon_n > epsilon:
+        x1, y1, x2, y2, epsilon_n, a, b = on_count(func, a, b, delta, x1, y1, x2, y2)
+        iter_count += 1
 
-    xResult = (a + b) / 2
-    funcResult = func(xResult)
-    return funcResult
+    x_result = (a + b) / 2
+    func_result = func(x_result)
+
+    return func_result, iter_count
 
 
 def on_count(func, start, end, delta, x1, y1, x2, y2):

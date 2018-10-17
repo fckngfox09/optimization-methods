@@ -18,6 +18,7 @@ def count(func, f_diff, start, end, epsilon):
 
     x0, y0 = on_count(f_diff, x_sym, a, b)
 
+    iter_count = 1
     while np.abs(y0) > epsilon:
         if y0 > 0:
             b = x0
@@ -27,8 +28,9 @@ def count(func, f_diff, start, end, epsilon):
         x_iter, y_iter = on_count(f_diff, x_sym, a, b)
         x0 = x_iter
         y0 = y_iter
+        iter_count += 1
 
-    return func(x0)
+    return func(x0), iter_count
 
 
 def on_count(f_diff, x_sym, start, end):

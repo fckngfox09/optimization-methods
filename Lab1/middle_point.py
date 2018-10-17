@@ -16,6 +16,7 @@ def count(func, f_diff, start, end, epsilon):
 
     df, x0 = on_count(f_diff, x_sym, a, b)
 
+    iter_count = 1
     while np.abs(df) > epsilon:
         if df > 0:
             b = x0
@@ -24,8 +25,9 @@ def count(func, f_diff, start, end, epsilon):
 
         df, x1 = on_count(f_diff, x_sym, a, b)
         x0 = x1
+        iter_count += 1
 
-    return func(x0)
+    return func(x0), iter_count
 
 
 def on_count(f_diff, x_sym, start, end):

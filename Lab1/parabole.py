@@ -16,14 +16,16 @@ def count(func, start, end, epsilon):
 
     x0, x1, x2, x3, f1, f2, f3 = on_count(func, x1, x2, x3, f1, f2, f3)
 
+    iter_count = 1
     while True:
         x_iter, x1, x2, x3, f1, f2, f3 = on_count(func, x1, x2, x3, f1, f2, f3)
         delta = np.abs((x0 - x_iter))
         x0 = x_iter
         if np.abs(delta <= epsilon):
             break
+        iter_count += 1
 
-    return func(x0)
+    return func(x0), iter_count
 
 
 def on_count(func, x1, x2, x3, f1, f2, f3):

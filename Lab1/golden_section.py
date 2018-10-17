@@ -1,5 +1,6 @@
 import numpy as np
 
+
 # Метод золотого сечения
 def count(func, start, end, epsilon):
     a = start
@@ -12,14 +13,17 @@ def count(func, start, end, epsilon):
     y2 = func(x2)
 
     tau = (np.sqrt(5) - 1) / 2
-    epsilonN = (b - a) / 2
+    epsilon_n = (b - a) / 2
 
-    while epsilonN > epsilon:
-        a, b, x1, y1, x2, y2, epsilonN = on_count(func, a, b, x1, y1, x2, y2, tau)
 
-    xResult = (a + b) / 2
-    yResult = func(xResult)
-    return yResult
+    iter_count = 1
+    while epsilon_n > epsilon:
+        a, b, x1, y1, x2, y2, epsilon_n = on_count(func, a, b, x1, y1, x2, y2, tau)
+        iter_count += 1
+
+    x_result = (a + b) / 2
+    y_result = func(x_result)
+    return y_result, iter_count
 
 
 def on_count(func, start, end, x1, y1, x2, y2, tau):
