@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 # Поразрядный поиск
-def count(func, start, end, delta, epsilon):
+def count(func, start, end, delta, epsilon, show_chart=False):
     x = start
     y = func(x)
 
@@ -15,9 +15,13 @@ def count(func, start, end, delta, epsilon):
 
     while np.abs(delta * mul_const) > epsilon:
         x, y, iter_count = on_count(func, x, delta, y, iter_count)
-        plt.plot([x_old, x], [y_old, y])
-        x_old = x
-        y_old = y
+
+        # Постройка графика
+        if show_chart:
+            plt.plot([x_old, x], [y_old, y])
+            x_old = x
+            y_old = y
+
         delta /= mul_const
 
     return y, iter_count

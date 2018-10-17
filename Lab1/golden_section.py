@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 # Метод золотого сечения
-def count(func, start, end, epsilon):
+def count(func, start, end, epsilon, show_chart=False):
     a = start
     b = end
 
@@ -20,7 +20,9 @@ def count(func, start, end, epsilon):
     while epsilon_n > epsilon:
         a, b, x1, y1, x2, y2, epsilon_n = on_count(func, a, b, x1, y1, x2, y2, tau)
         iter_count += 1
-        plt.plot([a, b], [func(a), func(b)])
+
+        if show_chart:
+            plt.plot([a, b], [func(a), func(b)])
 
     x_result = (a + b) / 2
     y_result = func(x_result)

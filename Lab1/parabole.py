@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 # Метод парабол
-def count(func, start, end, epsilon):
+def count(func, start, end, epsilon, show_chart=False):
     a = start
     b = end
 
@@ -15,11 +15,11 @@ def count(func, start, end, epsilon):
     f2 = func(x2)
     f3 = func(x3)
 
-    x0, x1, x2, x3, f1, f2, f3 = on_count(func, x1, x2, x3, f1, f2, f3, a, b)
+    x0, x1, x2, x3, f1, f2, f3 = on_count(func, x1, x2, x3, f1, f2, f3, a, b, show_chart)
 
     iter_count = 1
     while True:
-        x_iter, x1, x2, x3, f1, f2, f3 = on_count(func, x1, x2, x3, f1, f2, f3, a, b)
+        x_iter, x1, x2, x3, f1, f2, f3 = on_count(func, x1, x2, x3, f1, f2, f3, a, b, show_chart)
         delta = np.abs((x0 - x_iter))
         x0 = x_iter
         if np.abs(delta <= epsilon):
@@ -29,7 +29,7 @@ def count(func, start, end, epsilon):
     return func(x0), iter_count
 
 
-def on_count(func, x1, x2, x3, f1, f2, f3, a, b):
+def on_count(func, x1, x2, x3, f1, f2, f3, a, b, show_chart):
     a0 = f1
     a1 = (f2 - f1) / (x2 - x1)
     a2 = ((f3 - f1) / (x3 - x1) - (f2 - f1) / (x2 - x1)) / (x3 - x2)
@@ -39,7 +39,9 @@ def on_count(func, x1, x2, x3, f1, f2, f3, a, b):
     y_plot = (lambda q: a0 + a1 * (q - x1) + a2 * (q - x1) * (q - x2))
     x_plot = np.linspace(a, b, 200)
     y_p = y_plot(x_plot)
-    plt.plot(x_plot, y_p)
+
+    if show_chart:
+        plt.plot(x_plot, y_p)
 
     fx = func(x)
 
