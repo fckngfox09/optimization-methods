@@ -56,11 +56,11 @@ def main():
     y_min, iter_count = golden_section.count(func, start, end, epsilon)
     print('Метод золотого сечения', y_min)
     print('Количество итераций ', iter_count)
-    plt.show()
 
     y_min, iter_count = parabole.count(func, start, end, epsilon)
     print('Метод парабол', y_min)
     print('Количество итераций ', iter_count)
+    plt.show()
 
     # Отсюда начинаются методы, работающие через производные.
     # Как сделать это через lambda я не смог найти.

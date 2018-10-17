@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 
 # Метод перебора
 def count(func, start, end, epsilon):
-    plt.title('Метод перебора')
     a = start
     b = end
     n = (b - a) / epsilon
