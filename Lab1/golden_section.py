@@ -1,0 +1,44 @@
+import numpy as np
+
+# Метод золотого сечения
+def count(func, start, end, epsilon):
+    a = start
+    b = end
+
+    x1 = a + ((3 - np.sqrt(5)) / 2) * (b - a)
+    x2 = a + ((np.sqrt(5) - 1) / 2) * (b - a)
+
+    y1 = func(x1)
+    y2 = func(x2)
+
+    tau = (np.sqrt(5) - 1) / 2
+    epsilonN = (b - a) / 2
+
+    while epsilonN > epsilon:
+        a, b, x1, y1, x2, y2, epsilonN = on_count(func, a, b, x1, y1, x2, y2, tau)
+
+    xResult = (a + b) / 2
+    yResult = func(xResult)
+    return yResult
+
+
+def on_count(func, start, end, x1, y1, x2, y2, tau):
+    a = start
+    b = end
+
+    if y1 <= y2:
+        b = x2
+        x2 = x1
+        y2 = y1
+        x1 = b - (tau * (b - a))
+        y1 = func(x1)
+    else:
+        a = x1
+        x1 = x2
+        y1 = y2
+        x2 = b - ((1 - tau) * (b - a))
+        y2 = func(x2)
+
+    epsilonN = tau * ((b - a) / 2)
+
+    return a, b, x1, y1, x2, y2, epsilonN
