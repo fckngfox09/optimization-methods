@@ -219,26 +219,26 @@ def main():
     epsilon = 0.0001
     show_chart = True
 
-    plot_func(start, epsilon, brute_force_method, epsilon, show_chart)
-    plot_func(start, epsilon, bitwise_method, epsilon, show_chart)
-    plot_func(start, epsilon, dihotomy_method, epsilon, show_chart)
-    plot_func(start, epsilon, golden_section_method, epsilon, show_chart)
-    plot_func(start, epsilon, parabole_method, epsilon, show_chart)
+    plot_func(start, end, brute_force_method, epsilon, show_chart)
+    plot_func(start, end, bitwise_method, epsilon, show_chart)
+    plot_func(start, end, dihotomy_method, epsilon, show_chart)
+    plot_func(start, end, golden_section_method, epsilon, show_chart)
+    plot_func(start, end, parabole_method, epsilon, show_chart)
 
-    plot_func(start, epsilon, middle_point_method, epsilon, show_chart)
-    plot_func(start, epsilon, middle_point_method_central_network, epsilon, show_chart)
-    plot_func(start, epsilon, middle_point_method_left_network, epsilon, show_chart)
-    plot_func(start, epsilon, middle_point_method_right_network, epsilon, show_chart)
+    plot_func(start, end, middle_point_method, epsilon, show_chart)
+    plot_func(start, end, middle_point_method_central_network, epsilon, show_chart)
+    plot_func(start, end, middle_point_method_left_network, epsilon, show_chart)
+    plot_func(start, end, middle_point_method_right_network, epsilon, show_chart)
 
-    plot_func(start, epsilon, chord_method, epsilon, show_chart)
-    plot_func(start, epsilon, chord_method_central_network, epsilon, show_chart)
-    plot_func(start, epsilon, chord_method_left_network, epsilon, show_chart)
-    plot_func(start, epsilon, chord_method_right_network, epsilon, show_chart)
+    plot_func(start, end, chord_method, epsilon, show_chart)
+    plot_func(start, end, chord_method_central_network, epsilon, show_chart)
+    plot_func(start, end, chord_method_left_network, epsilon, show_chart)
+    plot_func(start, end, chord_method_right_network, epsilon, show_chart)
 
-    plot_func(start, epsilon, newton_method, epsilon, show_chart)
-    plot_func(start, epsilon, newton_method_central_network, epsilon, show_chart)
-    plot_func(start, epsilon, newton_method_left_network, epsilon, show_chart)
-    plot_func(start, epsilon, newton_method_right_network, epsilon, show_chart)
+    plot_func(start, end, newton_method, epsilon, show_chart)
+    plot_func(start, end, newton_method_central_network, epsilon, show_chart)
+    plot_func(start, end, newton_method_left_network, epsilon, show_chart)
+    plot_func(start, end, newton_method_right_network, epsilon, show_chart)
 
 
 if __name__ == "__main__":
