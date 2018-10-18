@@ -17,6 +17,7 @@ import middle_point
 import chord
 import newton
 import difference_network
+import newton_4_ex
 
 sns.set()
 
@@ -156,9 +157,9 @@ def chord_method_right_network(start, end, epsilon, show_chart):
     plt.title(name)
 
 
-def newton_method(start, end, epsilon, show_chart):
+def newton_method(start, end, epsilon, show_chart, x_start=0):
     name = 'Метод Ньютона '
-    y_min, iter_count = newton.count(sym_func, start, end, epsilon, show_chart=show_chart)
+    y_min, iter_count = newton.count(sym_func, start, end, epsilon, show_chart=show_chart, x_start=x_start)
     print(name, y_min)
     print('Количество итераций ', iter_count)
     plt.title(name)
@@ -212,33 +213,42 @@ def newton_method_right_network(start, end, epsilon, show_chart):
     plt.title(name)
 
 
+
 # ДЛя дебага.
 def main():
-    start = -1
-    end = 1
-    epsilon = 0.0001
+    start = -1.5
+    end = 1.5
+    epsilon = 0.001
     show_chart = True
+    #
+    # plot_func(start, end, brute_force_method, epsilon, show_chart)
+    # plot_func(start, end, bitwise_method, epsilon, show_chart)
+    # plot_func(start, end, dihotomy_method, epsilon, show_chart)
+    # plot_func(start, end, golden_section_method, epsilon, show_chart)
+    # plot_func(start, end, parabole_method, epsilon, show_chart)
+    #
+    # plot_func(start, end, middle_point_method, epsilon, show_chart)
+    # plot_func(start, end, middle_point_method_central_network, epsilon, show_chart)
+    # plot_func(start, end, middle_point_method_left_network, epsilon, show_chart)
+    # plot_func(start, end, middle_point_method_right_network, epsilon, show_chart)
+    #
+    # plot_func(start, end, chord_method, epsilon, show_chart)
+    # plot_func(start, end, chord_method_central_network, epsilon, show_chart)
+    # plot_func(start, end, chord_method_left_network, epsilon, show_chart)
+    # plot_func(start, end, chord_method_right_network, epsilon, show_chart)
+    #
+    # plot_func(start, end, newton_method, epsilon, show_chart)
+    # plot_func(start, end, newton_method_central_network, epsilon, show_chart)
+    # plot_func(start, end, newton_method_left_network, epsilon, show_chart)
+    # plot_func(start, end, newton_method_right_network, epsilon, show_chart)
 
-    plot_func(start, end, brute_force_method, epsilon, show_chart)
-    plot_func(start, end, bitwise_method, epsilon, show_chart)
-    plot_func(start, end, dihotomy_method, epsilon, show_chart)
-    plot_func(start, end, golden_section_method, epsilon, show_chart)
-    plot_func(start, end, parabole_method, epsilon, show_chart)
+    # newton_4_ex.newton_method_arctg(start, end, epsilon, 1)
+    a, b = newton_4_ex.find_range_numerically(start, end, epsilon)
+    # newton_method(start, end, epsilon, show_chart=True, x_start=a)
+    # newton_method(start, end, epsilon, show_chart=True, x_start=a - 1)
 
-    plot_func(start, end, middle_point_method, epsilon, show_chart)
-    plot_func(start, end, middle_point_method_central_network, epsilon, show_chart)
-    plot_func(start, end, middle_point_method_left_network, epsilon, show_chart)
-    plot_func(start, end, middle_point_method_right_network, epsilon, show_chart)
-
-    plot_func(start, end, chord_method, epsilon, show_chart)
-    plot_func(start, end, chord_method_central_network, epsilon, show_chart)
-    plot_func(start, end, chord_method_left_network, epsilon, show_chart)
-    plot_func(start, end, chord_method_right_network, epsilon, show_chart)
-
-    plot_func(start, end, newton_method, epsilon, show_chart)
-    plot_func(start, end, newton_method_central_network, epsilon, show_chart)
-    plot_func(start, end, newton_method_left_network, epsilon, show_chart)
-    plot_func(start, end, newton_method_right_network, epsilon, show_chart)
+    # newton_method(start, end, epsilon, show_chart=True, x_start=b)
+    newton_4_ex.newton_method_atan(start, end, epsilon, b + 1)
 
 
 if __name__ == "__main__":
