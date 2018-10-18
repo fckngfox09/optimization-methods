@@ -36,7 +36,7 @@ def count(func, start, end, epsilon, show_chart=False, f_diff_method=default_cou
 
         if show_chart:
             x_p = np.linspace(x1 - step, x1 + step, 200)
-            plt.plot(x_p, df * (x_p - x1) + func(x1))
+            plt.plot(x_p, df * (x_p - x1) + func.subs(x_sym, x1))
 
         x0 = x1
         iter_count += 1

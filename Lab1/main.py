@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 #  Мои модули
+from pip._vendor.distlib.compat import raw_input
+
 import bitwise
 import brute_force
 import dihotomy
@@ -55,7 +57,7 @@ def bitwise_method(start, end, epsilon, show_chart):
 
 
 def dihotomy_method(start, end, epsilon, show_chart):
-    delta = 0.0005
+    delta = 0.00005
     y_min, iter_count = dihotomy.count(func, start, end, delta, epsilon, show_chart=show_chart)
     print('Дихотомия ', y_min)
     print('Количество итераций ', iter_count)
@@ -203,3 +205,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    raw_input()

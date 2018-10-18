@@ -38,7 +38,7 @@ def count(func, start, end, epsilon, show_chart=False, f_diff_method=default_cou
         iter_count += 1
 
         if show_chart:
-            plt.plot([a, b], [func(a), func(b)])
+            plt.plot([a, b], [func.subs(x_sym, a), func.subs(x_sym, b)])
             plt.scatter(x0, func.subs(x_sym, x0), color='red')
 
     return func.subs(x_sym, x0), iter_count
