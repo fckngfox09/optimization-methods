@@ -32,7 +32,7 @@ def count(func, start, end, epsilon, show_chart=False, f_diff_method=default_cou
     df = float(f_diff_method(func, x0))
 
     iter_count = 0
-    while np.abs(df) > epsilon:
+    while np.abs(df) > epsilon: # Добавить проверку на сходимость.
 
         if show_chart:
             plt.scatter(x0, func.subs(x_sym, x0), color='red')
