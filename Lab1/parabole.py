@@ -26,6 +26,9 @@ def count(func, start, end, epsilon, show_chart=False):
             break
         iter_count += 1
 
+    if show_chart:
+        plt.scatter(x0, func(x0), color='red')
+
     return func(x0), iter_count
 
 

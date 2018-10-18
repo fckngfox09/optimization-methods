@@ -24,6 +24,9 @@ def count(func, start, end, delta, epsilon, show_chart=False):
 
         delta /= mul_const
 
+    if show_chart:
+        plt.scatter(x, y, color='red')
+
     return y, iter_count
 
 

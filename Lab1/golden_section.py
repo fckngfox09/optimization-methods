@@ -26,6 +26,10 @@ def count(func, start, end, epsilon, show_chart=False):
 
     x_result = (a + b) / 2
     y_result = func(x_result)
+
+    if show_chart:
+        plt.scatter(x_result, y_result, color='red')
+
     return y_result, iter_count
 
 

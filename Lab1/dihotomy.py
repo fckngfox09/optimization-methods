@@ -24,6 +24,9 @@ def count(func, start, end, delta, epsilon, show_chart=False):
     x_result = (a + b) / 2
     func_result = func(x_result)
 
+    if show_chart:
+        plt.scatter(x_result, func_result, color='red')
+
     return func_result, iter_count
 
 
