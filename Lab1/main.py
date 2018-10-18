@@ -28,7 +28,7 @@ sym_func = x_sym ** 4 + x_sym ** 2 + x_sym + 1
 
 
 # Построить график функции
-def plot_func(start, end):
+def plot_func(start, end, method, epsilon=0.1, show_chart=False):
     plt.figure()
 
     cuts = 1000
@@ -38,122 +38,167 @@ def plot_func(start, end):
     plt.xlabel('x')
     plt.ylabel('y')
     plt.grid(True)
+    method(start, end, epsilon, show_chart)
+    plt.show()
+
+
+def brute_force_method(start, end, epsilon, show_chart):
+    y_min = brute_force.count(func, start, end, epsilon, show_chart=show_chart)
+    print('Метод перебора ', y_min)
+
+
+def bitwise_method(start, end, epsilon, show_chart):
+    delta = 0.25
+    y_min, iter_count = bitwise.count(func, start, end, delta, epsilon, show_chart=show_chart)
+    print('Поразрядный поиск ', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def dihotomy_method(start, end, epsilon, show_chart):
+    delta = 0.0005
+    y_min, iter_count = dihotomy.count(func, start, end, delta, epsilon, show_chart=show_chart)
+    print('Дихотомия ', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def golden_section_method(start, end, epsilon, show_chart):
+    y_min, iter_count = golden_section.count(func, start, end, epsilon, show_chart=show_chart)
+    print('Метод золотого сечения', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def parabole_method(start, end, epsilon, show_chart):
+    y_min, iter_count = parabole.count(func, start, end, epsilon, show_chart=show_chart)
+    print('Метод парабол', y_min)
+    print('Количество итераций ', iter_count)
+
+
+# Отсюда начинаются методы, работающие через производные.
+# Как сделать это через lambda я не смог найти.
+def middle_point_method(start, end, epsilon, show_chart):
+    y_min, iter_count = middle_point.count(sym_func, start, end, epsilon, show_chart=show_chart)
+    print('Метод средней точки ', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def middle_point_method_central_network(start, end, epsilon, show_chart):
+    y_min, iter_count = middle_point.count(sym_func, start, end, epsilon, show_chart=show_chart,
+                                           f_diff_method=difference_network.central_network)
+    print('Метод средней точки ', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def middle_point_method_left_network(start, end, epsilon, show_chart):
+    y_min, iter_count = middle_point.count(sym_func, start, end, epsilon, show_chart=show_chart, f_diff_method=difference_network.left_network)
+    print('Метод средней точки ', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def middle_point_method_right_network(start, end, epsilon, show_chart):
+    y_min, iter_count = middle_point.count(sym_func, start, end, epsilon, show_chart=show_chart,
+                                           f_diff_method=difference_network.right_network)
+    print('Метод средней точки ', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def chord_method(start, end, epsilon, show_chart):
+    y_min, iter_count = chord.count(sym_func, start, end, epsilon, show_chart=show_chart)
+    print('Метод хорд', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def chord_method_central_network(start, end, epsilon, show_chart):
+    y_min, iter_count = chord.count(sym_func, start, end, epsilon, show_chart=show_chart, f_diff_method=difference_network.central_network)
+    print('Метод хорд', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def chord_method_left_network(start, end, epsilon, show_chart):
+    y_min, iter_count = chord.count(sym_func, start, end, epsilon, show_chart=show_chart, f_diff_method=difference_network.left_network)
+    print('Метод хорд', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def chord_method_right_network(start, end, epsilon, show_chart):
+    y_min, iter_count = chord.count(sym_func, start, end, epsilon, show_chart=show_chart, f_diff_method=difference_network.right_network)
+    print('Метод хорд', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def newton_method(start, end, epsilon, show_chart):
+    y_min, iter_count = newton.count(sym_func, start, end, epsilon, show_chart=show_chart)
+    print('Метод Ньютона', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def newton_method_central_network(start, end, epsilon, show_chart):
+    y_min, iter_count = \
+        newton.count(
+            sym_func,
+            start,
+            end,
+            epsilon,
+            show_chart=show_chart,
+            f_diff_method=difference_network.central_network,
+            f_diff_diff_method=difference_network.central_network_second)
+    print('Метод Ньютона', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def newton_method_left_network(start, end, epsilon, show_chart):
+    y_min, iter_count = \
+        newton.count(
+            sym_func,
+            start,
+            end,
+            epsilon,
+            show_chart=show_chart,
+            f_diff_method=difference_network.left_network,
+            f_diff_diff_method=difference_network.central_network_second)
+    print('Метод Ньютона', y_min)
+    print('Количество итераций ', iter_count)
+
+
+def newton_method_right_network(start, end, epsilon, show_chart):
+    y_min, iter_count = \
+        newton.count(
+            sym_func,
+            start,
+            end,
+            epsilon,
+            show_chart=show_chart,
+            f_diff_method=difference_network.right_network,
+            f_diff_diff_method=difference_network.central_network_second)
+    print('Метод Ньютона', y_min)
+    print('Количество итераций ', iter_count)
 
 
 def main():
     start = -1
     end = 1
     epsilon = 0.0001
-    plot_func(start, end)
+    show_chart = True
 
-    epsilon_for_showing = 0.1
-    y_min = brute_force.count(func, start, end, epsilon)
-    print('Метод перебора ', y_min)
+    plot_func(start, epsilon, brute_force_method, epsilon, show_chart)
+    plot_func(start, epsilon, bitwise_method, epsilon, show_chart)
+    plot_func(start, epsilon, dihotomy_method, epsilon, show_chart)
+    plot_func(start, epsilon, golden_section_method, epsilon, show_chart)
+    plot_func(start, epsilon, parabole_method, epsilon, show_chart)
 
-    delta = 0.25
-    y_min, iter_count = bitwise.count(func, start, end, delta, epsilon)
-    print('Поразрядный поиск ', y_min)
-    print('Количество итераций ', iter_count)
+    plot_func(start, epsilon, middle_point_method, epsilon, show_chart)
+    plot_func(start, epsilon, middle_point_method_central_network, epsilon, show_chart)
+    plot_func(start, epsilon, middle_point_method_left_network, epsilon, show_chart)
+    plot_func(start, epsilon, middle_point_method_right_network, epsilon, show_chart)
 
-    dihotomy_delta = 0.00005
-    y_min, iter_count = dihotomy.count(func, start, end, dihotomy_delta, epsilon)
-    print('Дихотомия ', y_min)
-    print('Количество итераций ', iter_count)
+    plot_func(start, epsilon, chord_method, epsilon, show_chart)
+    plot_func(start, epsilon, chord_method_central_network, epsilon, show_chart)
+    plot_func(start, epsilon, chord_method_left_network, epsilon, show_chart)
+    plot_func(start, epsilon, chord_method_right_network, epsilon, show_chart)
 
-    y_min, iter_count = golden_section.count(func, start, end, epsilon)
-    print('Метод золотого сечения', y_min)
-    print('Количество итераций ', iter_count)
-
-    y_min, iter_count = parabole.count(func, start, end, epsilon)
-    print('Метод парабол', y_min)
-    print('Количество итераций ', iter_count)
-
-    # Отсюда начинаются методы, работающие через производные.
-    # Как сделать это через lambda я не смог найти.
-
-    start = -1
-    end = 1
-
-    y_min, iter_count = middle_point.count(sym_func, start, end, epsilon)
-    print('Метод средней точки ', y_min)
-    print('Количество итераций ', iter_count)
-
-    y_min, iter_count = chord.count(sym_func, start, end, epsilon)
-    print('Метод хорд', y_min)
-    print('Количество итераций ', iter_count)
-
-    y_min, iter_count = newton.count(sym_func, start, end, epsilon)
-    print('Метод Ньютона', y_min)
-    print('Количество итераций ', iter_count)
-
-    # ЦЕНТРАЛЬНАЯ РАЗНОСТЬ
-    print('ЦЕНТРАЛЬНАЯ РАЗНОСТЬ')
-
-    y_min, iter_count = middle_point.count(sym_func, start, end, epsilon, f_diff_method=difference_network.central_network)
-    print('Метод средней точки ', y_min)
-    print('Количество итераций ', iter_count)
-
-    y_min, iter_count = chord.count(sym_func, start, end, epsilon, f_diff_method=difference_network.central_network)
-    print('Метод хорд', y_min)
-    print('Количество итераций ', iter_count)
-
-    y_min, iter_count = \
-        newton.count(
-            sym_func,
-            start,
-            end,
-            epsilon,
-            f_diff_method=difference_network.central_network,
-            f_diff_diff_method=difference_network.central_network_second)
-
-    print('Метод Ньютона', y_min)
-    print('Количество итераций ', iter_count)
-
-    # ЛЕВАЯ РАЗНОСТЬ
-    print('ЛЕВАЯ РАЗНОСТЬ')
-
-    y_min, iter_count = middle_point.count(sym_func, start, end, epsilon, f_diff_method=difference_network.left_network)
-    print('Метод средней точки ', y_min)
-    print('Количество итераций ', iter_count)
-
-    y_min, iter_count = chord.count(sym_func, start, end, epsilon, f_diff_method=difference_network.left_network)
-    print('Метод хорд', y_min)
-    print('Количество итераций ', iter_count)
-
-    y_min, iter_count = \
-        newton.count(
-            sym_func,
-            start,
-            end,
-            epsilon,
-            f_diff_method=difference_network.left_network,
-            f_diff_diff_method=difference_network.central_network_second)
-    print('Метод Ньютона', y_min)
-    print('Количество итераций ', iter_count)
-
-    # ПРАВАЯ РАЗНОСТЬ
-    print('ПРАВАЯ РАЗНОСТЬ')
-
-    y_min, iter_count = middle_point.count(sym_func, start, end, epsilon, f_diff_method=difference_network.right_network)
-    print('Метод средней точки ', y_min)
-    print('Количество итераций ', iter_count)
-
-    y_min, iter_count = chord.count(sym_func, start, end, epsilon, f_diff_method=difference_network.right_network)
-    print('Метод хорд', y_min)
-    print('Количество итераций ', iter_count)
-
-    y_min, iter_count = \
-        newton.count(
-            sym_func,
-            start,
-            end,
-            epsilon,
-            f_diff_method=difference_network.right_network,
-            f_diff_diff_method=difference_network.central_network_second)
-    print('Метод Ньютона', y_min)
-    print('Количество итераций ', iter_count)
-
-    plt.show()
+    plot_func(start, epsilon, newton_method, epsilon, show_chart)
+    plot_func(start, epsilon, newton_method_central_network, epsilon, show_chart)
+    plot_func(start, epsilon, newton_method_left_network, epsilon, show_chart)
+    plot_func(start, epsilon, newton_method_right_network, epsilon, show_chart)
 
 
 if __name__ == "__main__":
