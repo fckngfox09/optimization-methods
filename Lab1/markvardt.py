@@ -29,19 +29,19 @@ def plot_newton_func(start, end, method, x_start, epsilon=0.1):
 
 
 def newton_method_atan(start, end, epsilon, x_start):
-    name = 'Метод Рафсона для 4 задания.'
+    name = 'Метод Марквардта для 4 задания.'
 
-    y_min, iter_count = newton.rafson_mod(arctg_func, start, end, epsilon, x_start=x_start, show_chart=True)
+    y_min, iter_count = newton.markvardt_mod(arctg_func, start, end, epsilon, x_start=x_start, show_chart=True)
 
     print(name, y_min)
     print('Количество итераций ', iter_count)
 
 
 def newton_method_atan_central_network(start, end, epsilon, x_start):
-    name = 'Метод Рафсона для 4 задания, средняя разность.'
+    name = 'Метод Марквардта для 4 задания, средняя разность.'
 
     y_min, iter_count = \
-        newton.rafson_mod(
+        newton.markvardt_mod(
             arctg_func,
             start,
             end,
@@ -56,10 +56,10 @@ def newton_method_atan_central_network(start, end, epsilon, x_start):
 
 
 def newton_method_atan_left_network(start, end, epsilon, x_start):
-    name = 'Метод Рафсона для 4 задания. Левая разность.'
+    name = 'Метод Марквардта для 4 задания. Левая разность.'
 
     y_min, iter_count = \
-        newton.rafson_mod(
+        newton.markvardt_mod(
             arctg_func,
             start,
             end,
@@ -74,10 +74,10 @@ def newton_method_atan_left_network(start, end, epsilon, x_start):
 
 
 def newton_method_atan_right_network(start, end, epsilon, x_start):
-    name = 'Метод Рафсона для 4 задания. Правая разность.'
+    name = 'Метод Марквардта для 4 задания. Правая разность.'
 
     y_min, iter_count = \
-        newton.rafson_mod(
+        newton.markvardt_mod(
             arctg_func,
             start,
             end,
@@ -99,7 +99,7 @@ def find_range_numerically(start, end, epsilon):
 
     timer_emu = 0
     for point in x_arr:
-        y_min, iter_count = newton.rafson_mod(arctg_func, start, end, epsilon, x_start=point, show_chart=True)
+        y_min, iter_count = newton.markvardt_mod(arctg_func, start, end, epsilon, x_start=point, show_chart=True)
         if iter_count > 0:
             if point < min_a:
                 min_a = point

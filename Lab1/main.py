@@ -19,6 +19,7 @@ import newton
 import difference_network
 import newton_4_ex
 import rafson
+import markvardt
 
 sns.set()
 
@@ -266,7 +267,7 @@ def main():
     # newton_4_ex.newton_method_atan_right_network(start, end, epsilon, a - 0.01)
     # newton_4_ex.newton_method_atan_right_network(start, end, epsilon, b + 0.01)
     # newton_4_ex.newton_method_atan_right_network(start, end, epsilon, b - 0.01)
-
+    #
     # a, b = rafson.find_range_numerically(start, end, epsilon)
     #
     # rafson.newton_method_atan(start, end, epsilon, a + 0.1)
@@ -288,6 +289,28 @@ def main():
     # rafson.newton_method_atan_right_network(start, end, epsilon, a - 0.1)
     # rafson.newton_method_atan_right_network(start, end, epsilon, b + 0.1)
     # rafson.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
+    #
+    a, b = markvardt.find_range_numerically(start, end, epsilon)
+    #
+    markvardt.newton_method_atan(start, end, epsilon, a + 0.1)
+    markvardt.newton_method_atan(start, end, epsilon, a - 0.1)
+    markvardt.newton_method_atan(start, end, epsilon, b + 0.1)
+    markvardt.newton_method_atan(start, end, epsilon, b - 0.1)
+
+    markvardt.newton_method_atan_central_network(start, end, epsilon, a + 0.01)
+    markvardt.newton_method_atan_central_network(start, end, epsilon, a - 0.1)
+    markvardt.newton_method_atan_central_network(start, end, epsilon, b + 0.1)
+    markvardt.newton_method_atan_central_network(start, end, epsilon, b - 0.1)
+
+    markvardt.newton_method_atan_left_network(start, end, epsilon, a + 0.1)
+    markvardt.newton_method_atan_left_network(start, end, epsilon, a - 0.1)
+    markvardt.newton_method_atan_left_network(start, end, epsilon, b + 0.1)
+    markvardt.newton_method_atan_left_network(start, end, epsilon, b - 0.1)
+
+    markvardt.newton_method_atan_right_network(start, end, epsilon, a + 0.1)
+    markvardt.newton_method_atan_right_network(start, end, epsilon, a - 0.1)
+    markvardt.newton_method_atan_right_network(start, end, epsilon, b + 0.1)
+    markvardt.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
 
 
 if __name__ == "__main__":
