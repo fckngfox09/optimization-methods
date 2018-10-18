@@ -212,6 +212,7 @@ def newton_method_right_network(start, end, epsilon, show_chart):
     plt.title(name)
 
 
+# ДЛя дебага.
 def main():
     start = -1
     end = 1
