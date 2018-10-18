@@ -32,6 +32,7 @@ sym_func = x_sym ** 4 + x_sym ** 2 + x_sym + 1
 # Построить график функции
 def plot_func(start, end, method, epsilon=0.1, show_chart=False):
     plt.figure()
+    plt.ion()
 
     cuts = 1000
     x_arr = np.linspace(start, end, cuts)
@@ -41,6 +42,8 @@ def plot_func(start, end, method, epsilon=0.1, show_chart=False):
     plt.ylabel('y')
     plt.grid(True)
     method(start, end, epsilon, show_chart)
+    plt.draw()
+    plt.pause(0.01)
     plt.show()
 
 
