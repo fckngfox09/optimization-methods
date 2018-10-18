@@ -26,8 +26,10 @@ x_sym = sp.symbols('x')
 func = lambda x: (x ** 4 + x ** 2 + x + 1)
 # func = (lambda x: x ** 4 + np.exp(-x))
 
-sym_func = x_sym ** 4 + x_sym ** 2 + x_sym + 1
-# f = x_sym ** 4 + sp.exp(-x_sym)
+# sym_func = x_sym ** 4 + x_sym ** 2 + x_sym + 1
+# sym_func = x_sym ** 4 + sp.exp(-x_sym)
+sym_func = x_sym * sp.atan(x_sym) - sp.log(1 + (x_sym ** 2)) / 2
+
 
 
 # Построить график функции
@@ -218,7 +220,7 @@ def newton_method_right_network(start, end, epsilon, show_chart):
 def main():
     start = -1.5
     end = 1.5
-    epsilon = 0.001
+    epsilon = 0.0001
     show_chart = True
     #
     # plot_func(start, end, brute_force_method, epsilon, show_chart)
@@ -242,13 +244,27 @@ def main():
     # plot_func(start, end, newton_method_left_network, epsilon, show_chart)
     # plot_func(start, end, newton_method_right_network, epsilon, show_chart)
 
-    # newton_4_ex.newton_method_arctg(start, end, epsilon, 1)
     a, b = newton_4_ex.find_range_numerically(start, end, epsilon)
-    # newton_method(start, end, epsilon, show_chart=True, x_start=a)
-    # newton_method(start, end, epsilon, show_chart=True, x_start=a - 1)
 
-    # newton_method(start, end, epsilon, show_chart=True, x_start=b)
-    newton_4_ex.newton_method_atan(start, end, epsilon, b + 1)
+    newton_4_ex.newton_method_atan(start, end, epsilon, a + 0.01)
+    newton_4_ex.newton_method_atan(start, end, epsilon, a - 0.01)
+    newton_4_ex.newton_method_atan(start, end, epsilon, b + 0.01)
+    newton_4_ex.newton_method_atan(start, end, epsilon, b - 0.01)
+
+    newton_4_ex.newton_method_atan_central_network(start, end, epsilon, a + 0.01)
+    newton_4_ex.newton_method_atan_central_network(start, end, epsilon, a - 0.01)
+    newton_4_ex.newton_method_atan_central_network(start, end, epsilon, b + 0.01)
+    newton_4_ex.newton_method_atan_central_network(start, end, epsilon, b - 0.01)
+
+    newton_4_ex.newton_method_atan_left_network(start, end, epsilon, a + 0.01)
+    newton_4_ex.newton_method_atan_left_network(start, end, epsilon, a - 0.01)
+    newton_4_ex.newton_method_atan_left_network(start, end, epsilon, b + 0.01)
+    newton_4_ex.newton_method_atan_left_network(start, end, epsilon, b - 0.01)
+
+    newton_4_ex.newton_method_atan_right_network(start, end, epsilon, a + 0.01)
+    newton_4_ex.newton_method_atan_right_network(start, end, epsilon, a - 0.01)
+    newton_4_ex.newton_method_atan_right_network(start, end, epsilon, b + 0.01)
+    newton_4_ex.newton_method_atan_right_network(start, end, epsilon, b - 0.01)
 
 
 if __name__ == "__main__":

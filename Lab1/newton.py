@@ -29,7 +29,7 @@ def count(func, start, end, epsilon, show_chart=False, f_diff_method=default_cou
         return 'На концах в производной одинаковые знаки'
 
     x0 = x_start
-    df = float(f_diff_method(func, x0))
+    df = 1
     df_old = df
 
     iter_count = 1
@@ -39,8 +39,8 @@ def count(func, start, end, epsilon, show_chart=False, f_diff_method=default_cou
             plt.scatter(x0, func.subs(x_sym, x0), color='red')
 
         dff = float(f_diff_diff_method(func, x0))
-        x0 -= float(df) / float(dff)
         df = float(f_diff_method(func, x0))
+        x0 -= float(df) / float(dff)
 
         if iter_count > 0 and np.abs(df) > df_old:
             error = 'Метод не сошёлся.'
