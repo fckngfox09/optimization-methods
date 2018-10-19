@@ -24,6 +24,8 @@ sns.set()
 
 x_sym = sp.symbols('x')
 
+func_atan = lambda x: x * np.arctan(x) - np.log(1 + (x ** 2)) / 2
+
 func_original = lambda x: (x ** 4 + x ** 2 + x + 1)
 # func = (lambda x: x ** 4 + np.exp(-x))
 cos_func = lambda x: (np.cos(x) / (x ** 2))
@@ -246,6 +248,18 @@ def brute_force_sin(start, end, epsilon, show_chart):
     plt.title(name)
 
 
+def brokens_method_cos(start, end, epsilon, show_chart):
+    name = 'Метод ломанных для косинуса'
+    y_min = brokens_method.count(cos_func, start, end, epsilon, show_chart=show_chart)
+    print(name, y_min)
+    plt.title(name)
+
+
+def brokens_method_sin(start, end, epsilon, show_chart):
+    name = 'Метод ломанных для косинуса'
+    y_min = brokens_method.count(sin_func, start, end, epsilon, show_chart=show_chart)
+    print(name, y_min)
+    plt.title(name)
 
 # ДЛя дебага.
 def main():
@@ -275,7 +289,23 @@ def main():
     # plot_func(start, end, newton_method_left_network, epsilon, show_chart)
     # plot_func(start, end, newton_method_right_network, epsilon, show_chart)
 
+    plt.figure()
+    plt.ion()
+
+    cuts = 1000
+    x_arr = np.linspace(start, end, cuts)
+
+    plt.plot(x_arr, func_atan(x_arr))
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.grid(True)
     # a, b = newton_4_ex.find_range_numerically(start, end, epsilon)
+    # a, b = rafson.find_range_numerically(start, end, epsilon)
+    a, b = markvardt.find_range_numerically(start, end, epsilon)
+    plt.draw()
+    plt.pause(0.01)
+    plt.show()
+
     #
     # newton_4_ex.newton_method_atan(start, end, epsilon, a + 0.01)
     # newton_4_ex.newton_method_atan(start, end, epsilon, a - 0.01)
@@ -342,14 +372,15 @@ def main():
     # markvardt.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
 
 
-    # start = 0
-    # end = 4
-    # plot_func(start, end, brute_force_sin, epsilon, func=sin_func)
+    start = 0
+    end = 4
+    plot_func(start, end, brute_force_sin, epsilon, func=sin_func)
+    plot_func(start, end, brokens_method_sin, epsilon, func=sin_func)
 
     start = 1
     end = 12
     plot_func(start, end, brute_force_cos, epsilon, func=cos_func)
-    print(brokens_method.count(cos_func, start, end, 0.001))
+    plot_func(start, end, brokens_method_cos, epsilon, func=cos_func)
 
 
 

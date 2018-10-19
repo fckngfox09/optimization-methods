@@ -99,7 +99,7 @@ def find_range_numerically(start, end, epsilon):
 
     timer_emu = 0
     for point in x_arr:
-        y_min, iter_count = newton.rafson_mod(arctg_func, start, end, epsilon, x_start=point, show_chart=True)
+        y_min, iter_count = newton.rafson_mod(arctg_func, start, end, epsilon, x_start=point, show_chart=False)
         if iter_count > 0:
             if point < min_a:
                 min_a = point
@@ -108,6 +108,9 @@ def find_range_numerically(start, end, epsilon):
         if timer_emu % 5 is 0:
             print('Счёт идёт, никто не заглох...', timer_emu)
         timer_emu += 1
+
+    x_arr = np.arange(min_a, min_b, 0.01)
+    plt.plot(x_arr, func(x_arr))
 
     print('Диапазон начальных значений: [', min_a, ',', min_b, ']')
 
