@@ -14,6 +14,7 @@ def count(func, start, end, epsilon, show_chart=False):
 
     if show_chart:
         plt.scatter(x, y, color='c')
-        plt.scatter(x[min_index], y[min_index], color='red')
+
+    plt.scatter(x[min_index], y[min_index], color='red')
 
     return y[min_index]

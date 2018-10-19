@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 #  Мои модули
-from pip._vendor.distlib.compat import raw_input
-
 import bitwise
 import brute_force
 import dihotomy
@@ -25,17 +23,18 @@ sns.set()
 
 x_sym = sp.symbols('x')
 
-func = lambda x: (x ** 4 + x ** 2 + x + 1)
+func_original = lambda x: (x ** 4 + x ** 2 + x + 1)
 # func = (lambda x: x ** 4 + np.exp(-x))
+cos_func = lambda x: (np.cos(x) / (x ** 2))
+sin_func = lambda x: (x / 10) + (2 * np.sin(4 * x))
 
 sym_func = x_sym ** 4 + x_sym ** 2 + x_sym + 1
 # sym_func = x_sym ** 4 + sp.exp(-x_sym)
 # sym_func = x_sym * sp.atan(x_sym) - sp.log(1 + (x_sym ** 2)) / 2
 
 
-
 # Построить график функции
-def plot_func(start, end, method, epsilon=0.1, show_chart=False):
+def plot_func(start, end, method, epsilon=0.1, show_chart=False, func=func_original):
     plt.figure()
     plt.ion()
 
@@ -53,7 +52,7 @@ def plot_func(start, end, method, epsilon=0.1, show_chart=False):
 
 
 def brute_force_method(start, end, epsilon, show_chart):
-    y_min = brute_force.count(func, start, end, epsilon, show_chart=show_chart)
+    y_min = brute_force.count(func_original, start, end, epsilon, show_chart=show_chart)
     name = 'Метод перебора '
     print(name, y_min)
     plt.title(name)
@@ -61,7 +60,7 @@ def brute_force_method(start, end, epsilon, show_chart):
 
 def bitwise_method(start, end, epsilon, show_chart):
     delta = 0.25
-    y_min, iter_count = bitwise.count(func, start, end, delta, epsilon, show_chart=show_chart)
+    y_min, iter_count = bitwise.count(func_original, start, end, delta, epsilon, show_chart=show_chart)
     name = 'Поразрядный поиск '
     print(name, y_min)
     print('Количество итераций ', iter_count)
@@ -71,7 +70,7 @@ def bitwise_method(start, end, epsilon, show_chart):
 def dihotomy_method(start, end, epsilon, show_chart):
     name = 'Дихотомия '
     delta = 0.00005
-    y_min, iter_count = dihotomy.count(func, start, end, delta, epsilon, show_chart=show_chart)
+    y_min, iter_count = dihotomy.count(func_original, start, end, delta, epsilon, show_chart=show_chart)
     print(name, y_min)
     print('Количество итераций ', iter_count)
     plt.title(name)
@@ -79,7 +78,7 @@ def dihotomy_method(start, end, epsilon, show_chart):
 
 def golden_section_method(start, end, epsilon, show_chart):
     name = 'Метод золотого сечения'
-    y_min, iter_count = golden_section.count(func, start, end, epsilon, show_chart=show_chart)
+    y_min, iter_count = golden_section.count(func_original, start, end, epsilon, show_chart=show_chart)
     print(name, y_min)
     print('Количество итераций ', iter_count)
     plt.title(name)
@@ -87,7 +86,7 @@ def golden_section_method(start, end, epsilon, show_chart):
 
 def parabole_method(start, end, epsilon, show_chart):
     name = 'Метод парабол '
-    y_min, iter_count = parabole.count(func, start, end, epsilon, show_chart=show_chart)
+    y_min, iter_count = parabole.count(func_original, start, end, epsilon, show_chart=show_chart)
     print(name, y_min)
     print('Количество итераций ', iter_count)
     plt.title(name)
@@ -217,6 +216,32 @@ def newton_method_right_network(start, end, epsilon, show_chart):
     plt.title(name)
 
 
+def brute_force_cos(start, end, epsilon, show_chart):
+    name = 'Метод перебора для косинуса. '
+    y_min = \
+        brute_force.count(
+            cos_func,
+            start,
+            end,
+            epsilon,
+            show_chart)
+    print(name, y_min)
+    plt.title(name)
+
+
+def brute_force_sin(start, end, epsilon, show_chart):
+    name = 'Метод перебора для косинуса. '
+    y_min = \
+        brute_force.count(
+            sin_func,
+            start,
+            end,
+            epsilon,
+            show_chart)
+    print(name, y_min)
+    plt.title(name)
+
+
 
 # ДЛя дебага.
 def main():
@@ -290,27 +315,38 @@ def main():
     # rafson.newton_method_atan_right_network(start, end, epsilon, b + 0.1)
     # rafson.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
     #
-    a, b = markvardt.find_range_numerically(start, end, epsilon)
+    # a, b = markvardt.find_range_numerically(start, end, epsilon)
+    # #
+    # markvardt.newton_method_atan(start, end, epsilon, a + 0.1)
+    # markvardt.newton_method_atan(start, end, epsilon, a - 0.1)
+    # markvardt.newton_method_atan(start, end, epsilon, b + 0.1)
+    # markvardt.newton_method_atan(start, end, epsilon, b - 0.1)
     #
-    markvardt.newton_method_atan(start, end, epsilon, a + 0.1)
-    markvardt.newton_method_atan(start, end, epsilon, a - 0.1)
-    markvardt.newton_method_atan(start, end, epsilon, b + 0.1)
-    markvardt.newton_method_atan(start, end, epsilon, b - 0.1)
+    # markvardt.newton_method_atan_central_network(start, end, epsilon, a + 0.01)
+    # markvardt.newton_method_atan_central_network(start, end, epsilon, a - 0.1)
+    # markvardt.newton_method_atan_central_network(start, end, epsilon, b + 0.1)
+    # markvardt.newton_method_atan_central_network(start, end, epsilon, b - 0.1)
+    #
+    # markvardt.newton_method_atan_left_network(start, end, epsilon, a + 0.1)
+    # markvardt.newton_method_atan_left_network(start, end, epsilon, a - 0.1)
+    # markvardt.newton_method_atan_left_network(start, end, epsilon, b + 0.1)
+    # markvardt.newton_method_atan_left_network(start, end, epsilon, b - 0.1)
+    #
+    # markvardt.newton_method_atan_right_network(start, end, epsilon, a + 0.1)
+    # markvardt.newton_method_atan_right_network(start, end, epsilon, a - 0.1)
+    # markvardt.newton_method_atan_right_network(start, end, epsilon, b + 0.1)
+    # markvardt.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
 
-    markvardt.newton_method_atan_central_network(start, end, epsilon, a + 0.01)
-    markvardt.newton_method_atan_central_network(start, end, epsilon, a - 0.1)
-    markvardt.newton_method_atan_central_network(start, end, epsilon, b + 0.1)
-    markvardt.newton_method_atan_central_network(start, end, epsilon, b - 0.1)
 
-    markvardt.newton_method_atan_left_network(start, end, epsilon, a + 0.1)
-    markvardt.newton_method_atan_left_network(start, end, epsilon, a - 0.1)
-    markvardt.newton_method_atan_left_network(start, end, epsilon, b + 0.1)
-    markvardt.newton_method_atan_left_network(start, end, epsilon, b - 0.1)
+    start = 0
+    end = 4
+    plot_func(start, end, brute_force_sin, epsilon, func=sin_func)
 
-    markvardt.newton_method_atan_right_network(start, end, epsilon, a + 0.1)
-    markvardt.newton_method_atan_right_network(start, end, epsilon, a - 0.1)
-    markvardt.newton_method_atan_right_network(start, end, epsilon, b + 0.1)
-    markvardt.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
+    start = 1
+    end = 12
+    plot_func(start, end, brute_force_cos, epsilon, func=cos_func)
+
+
 
 
 if __name__ == "__main__":
