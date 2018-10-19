@@ -18,6 +18,7 @@ import difference_network
 import newton_4_ex
 import rafson
 import markvardt
+import brokens_method
 
 sns.set()
 
@@ -26,7 +27,10 @@ x_sym = sp.symbols('x')
 func_original = lambda x: (x ** 4 + x ** 2 + x + 1)
 # func = (lambda x: x ** 4 + np.exp(-x))
 cos_func = lambda x: (np.cos(x) / (x ** 2))
+cos_func_diff = lambda x: -np.sin(x)/x**2 - 2*np.cos(x)/x**3
+
 sin_func = lambda x: (x / 10) + (2 * np.sin(4 * x))
+sin_func_diff = lambda x: 8*np.cos(4*x) + 1/10
 
 sym_func = x_sym ** 4 + x_sym ** 2 + x_sym + 1
 # sym_func = x_sym ** 4 + sp.exp(-x_sym)
@@ -338,14 +342,14 @@ def main():
     # markvardt.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
 
 
-    start = 0
-    end = 4
-    plot_func(start, end, brute_force_sin, epsilon, func=sin_func)
+    # start = 0
+    # end = 4
+    # plot_func(start, end, brute_force_sin, epsilon, func=sin_func)
 
     start = 1
     end = 12
     plot_func(start, end, brute_force_cos, epsilon, func=cos_func)
-
+    print(brokens_method.count(cos_func, start, end, 0.001))
 
 
 
