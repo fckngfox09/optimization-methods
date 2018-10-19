@@ -132,5 +132,4 @@ def markvardt_mod(func, start, end, epsilon, show_chart=False, f_diff_method=def
             error = 'Метод не сошёлся.'
             return error, 0
 
-
     return float(func.subs(x_sym, x0)), iter_count

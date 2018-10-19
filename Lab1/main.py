@@ -268,26 +268,26 @@ def main():
     epsilon = 0.0001
     show_chart = True
     #
-    # plot_func(start, end, brute_force_method, epsilon, show_chart)
-    # plot_func(start, end, bitwise_method, epsilon, show_chart)
-    # plot_func(start, end, dihotomy_method, epsilon, show_chart)
-    # plot_func(start, end, golden_section_method, epsilon, show_chart)
-    # plot_func(start, end, parabole_method, epsilon, show_chart)
-    #
-    # plot_func(start, end, middle_point_method, epsilon, show_chart)
-    # plot_func(start, end, middle_point_method_central_network, epsilon, show_chart)
-    # plot_func(start, end, middle_point_method_left_network, epsilon, show_chart)
-    # plot_func(start, end, middle_point_method_right_network, epsilon, show_chart)
-    #
-    # plot_func(start, end, chord_method, epsilon, show_chart)
-    # plot_func(start, end, chord_method_central_network, epsilon, show_chart)
-    # plot_func(start, end, chord_method_left_network, epsilon, show_chart)
-    # plot_func(start, end, chord_method_right_network, epsilon, show_chart)
-    #
-    # plot_func(start, end, newton_method, epsilon, show_chart)
-    # plot_func(start, end, newton_method_central_network, epsilon, show_chart)
-    # plot_func(start, end, newton_method_left_network, epsilon, show_chart)
-    # plot_func(start, end, newton_method_right_network, epsilon, show_chart)
+    plot_func(start, end, brute_force_method, epsilon, show_chart)
+    plot_func(start, end, bitwise_method, epsilon, show_chart)
+    plot_func(start, end, dihotomy_method, epsilon, show_chart)
+    plot_func(start, end, golden_section_method, epsilon, show_chart)
+    plot_func(start, end, parabole_method, epsilon, show_chart)
+
+    plot_func(start, end, middle_point_method, epsilon, show_chart)
+    plot_func(start, end, middle_point_method_central_network, epsilon, show_chart)
+    plot_func(start, end, middle_point_method_left_network, epsilon, show_chart)
+    plot_func(start, end, middle_point_method_right_network, epsilon, show_chart)
+
+    plot_func(start, end, chord_method, epsilon, show_chart)
+    plot_func(start, end, chord_method_central_network, epsilon, show_chart)
+    plot_func(start, end, chord_method_left_network, epsilon, show_chart)
+    plot_func(start, end, chord_method_right_network, epsilon, show_chart)
+
+    plot_func(start, end, newton_method, epsilon, show_chart)
+    plot_func(start, end, newton_method_central_network, epsilon, show_chart)
+    plot_func(start, end, newton_method_left_network, epsilon, show_chart)
+    plot_func(start, end, newton_method_right_network, epsilon, show_chart)
 
     plt.figure()
     plt.ion()
@@ -299,77 +299,101 @@ def main():
     plt.xlabel('x')
     plt.ylabel('y')
     plt.grid(True)
-    # a, b = newton_4_ex.find_range_numerically(start, end, epsilon)
-    # a, b = rafson.find_range_numerically(start, end, epsilon)
+    a, b = newton_4_ex.find_range_numerically(start, end, epsilon)
+    plt.draw()
+    plt.pause(0.01)
+    plt.show()
+
+    newton_4_ex.newton_method_atan(start, end, epsilon, a + 0.01)
+    newton_4_ex.newton_method_atan(start, end, epsilon, a - 0.01)
+    newton_4_ex.newton_method_atan(start, end, epsilon, b + 0.01)
+    newton_4_ex.newton_method_atan(start, end, epsilon, b - 0.01)
+
+    newton_4_ex.newton_method_atan_central_network(start, end, epsilon, a + 0.01)
+    newton_4_ex.newton_method_atan_central_network(start, end, epsilon, a - 0.01)
+    newton_4_ex.newton_method_atan_central_network(start, end, epsilon, b + 0.01)
+    newton_4_ex.newton_method_atan_central_network(start, end, epsilon, b - 0.01)
+
+    newton_4_ex.newton_method_atan_left_network(start, end, epsilon, a + 0.01)
+    newton_4_ex.newton_method_atan_left_network(start, end, epsilon, a - 0.01)
+    newton_4_ex.newton_method_atan_left_network(start, end, epsilon, b + 0.01)
+    newton_4_ex.newton_method_atan_left_network(start, end, epsilon, b - 0.01)
+
+    newton_4_ex.newton_method_atan_right_network(start, end, epsilon, a + 0.01)
+    newton_4_ex.newton_method_atan_right_network(start, end, epsilon, a - 0.01)
+    newton_4_ex.newton_method_atan_right_network(start, end, epsilon, b + 0.01)
+    newton_4_ex.newton_method_atan_right_network(start, end, epsilon, b - 0.01)
+
+    plt.figure()
+    plt.ion()
+
+    cuts = 1000
+    x_arr = np.linspace(start, end, cuts)
+
+    plt.plot(x_arr, func_atan(x_arr))
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.grid(True)
+    a, b = rafson.find_range_numerically(start, end, epsilon)
+    plt.draw()
+    plt.pause(0.01)
+    plt.show()
+
+    rafson.newton_method_atan(start, end, epsilon, a + 0.1)
+    rafson.newton_method_atan(start, end, epsilon, a - 0.1)
+    rafson.newton_method_atan(start, end, epsilon, b + 0.1)
+    rafson.newton_method_atan(start, end, epsilon, b - 0.1)
+
+    rafson.newton_method_atan_central_network(start, end, epsilon, a + 0.01)
+    rafson.newton_method_atan_central_network(start, end, epsilon, a - 0.1)
+    rafson.newton_method_atan_central_network(start, end, epsilon, b + 0.1)
+    rafson.newton_method_atan_central_network(start, end, epsilon, b - 0.1)
+
+    rafson.newton_method_atan_left_network(start, end, epsilon, a + 0.1)
+    rafson.newton_method_atan_left_network(start, end, epsilon, a - 0.1)
+    rafson.newton_method_atan_left_network(start, end, epsilon, b + 0.1)
+    rafson.newton_method_atan_left_network(start, end, epsilon, b - 0.1)
+
+    rafson.newton_method_atan_right_network(start, end, epsilon, a + 0.1)
+    rafson.newton_method_atan_right_network(start, end, epsilon, a - 0.1)
+    rafson.newton_method_atan_right_network(start, end, epsilon, b + 0.1)
+    rafson.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
+
+    plt.figure()
+    plt.ion()
+
+    cuts = 1000
+    x_arr = np.linspace(start, end, cuts)
+
+    plt.plot(x_arr, func_atan(x_arr))
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.grid(True)
     a, b = markvardt.find_range_numerically(start, end, epsilon)
     plt.draw()
     plt.pause(0.01)
     plt.show()
 
     #
-    # newton_4_ex.newton_method_atan(start, end, epsilon, a + 0.01)
-    # newton_4_ex.newton_method_atan(start, end, epsilon, a - 0.01)
-    # newton_4_ex.newton_method_atan(start, end, epsilon, b + 0.01)
-    # newton_4_ex.newton_method_atan(start, end, epsilon, b - 0.01)
-    #
-    # newton_4_ex.newton_method_atan_central_network(start, end, epsilon, a + 0.01)
-    # newton_4_ex.newton_method_atan_central_network(start, end, epsilon, a - 0.01)
-    # newton_4_ex.newton_method_atan_central_network(start, end, epsilon, b + 0.01)
-    # newton_4_ex.newton_method_atan_central_network(start, end, epsilon, b - 0.01)
-    #
-    # newton_4_ex.newton_method_atan_left_network(start, end, epsilon, a + 0.01)
-    # newton_4_ex.newton_method_atan_left_network(start, end, epsilon, a - 0.01)
-    # newton_4_ex.newton_method_atan_left_network(start, end, epsilon, b + 0.01)
-    # newton_4_ex.newton_method_atan_left_network(start, end, epsilon, b - 0.01)
-    #
-    # newton_4_ex.newton_method_atan_right_network(start, end, epsilon, a + 0.01)
-    # newton_4_ex.newton_method_atan_right_network(start, end, epsilon, a - 0.01)
-    # newton_4_ex.newton_method_atan_right_network(start, end, epsilon, b + 0.01)
-    # newton_4_ex.newton_method_atan_right_network(start, end, epsilon, b - 0.01)
-    #
-    # a, b = rafson.find_range_numerically(start, end, epsilon)
-    #
-    # rafson.newton_method_atan(start, end, epsilon, a + 0.1)
-    # rafson.newton_method_atan(start, end, epsilon, a - 0.1)
-    # rafson.newton_method_atan(start, end, epsilon, b + 0.1)
-    # rafson.newton_method_atan(start, end, epsilon, b - 0.1)
-    #
-    # rafson.newton_method_atan_central_network(start, end, epsilon, a + 0.01)
-    # rafson.newton_method_atan_central_network(start, end, epsilon, a - 0.1)
-    # rafson.newton_method_atan_central_network(start, end, epsilon, b + 0.1)
-    # rafson.newton_method_atan_central_network(start, end, epsilon, b - 0.1)
-    #
-    # rafson.newton_method_atan_left_network(start, end, epsilon, a + 0.1)
-    # rafson.newton_method_atan_left_network(start, end, epsilon, a - 0.1)
-    # rafson.newton_method_atan_left_network(start, end, epsilon, b + 0.1)
-    # rafson.newton_method_atan_left_network(start, end, epsilon, b - 0.1)
-    #
-    # rafson.newton_method_atan_right_network(start, end, epsilon, a + 0.1)
-    # rafson.newton_method_atan_right_network(start, end, epsilon, a - 0.1)
-    # rafson.newton_method_atan_right_network(start, end, epsilon, b + 0.1)
-    # rafson.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
-    #
-    # a, b = markvardt.find_range_numerically(start, end, epsilon)
-    # #
-    # markvardt.newton_method_atan(start, end, epsilon, a + 0.1)
-    # markvardt.newton_method_atan(start, end, epsilon, a - 0.1)
-    # markvardt.newton_method_atan(start, end, epsilon, b + 0.1)
-    # markvardt.newton_method_atan(start, end, epsilon, b - 0.1)
-    #
-    # markvardt.newton_method_atan_central_network(start, end, epsilon, a + 0.01)
-    # markvardt.newton_method_atan_central_network(start, end, epsilon, a - 0.1)
-    # markvardt.newton_method_atan_central_network(start, end, epsilon, b + 0.1)
-    # markvardt.newton_method_atan_central_network(start, end, epsilon, b - 0.1)
-    #
-    # markvardt.newton_method_atan_left_network(start, end, epsilon, a + 0.1)
-    # markvardt.newton_method_atan_left_network(start, end, epsilon, a - 0.1)
-    # markvardt.newton_method_atan_left_network(start, end, epsilon, b + 0.1)
-    # markvardt.newton_method_atan_left_network(start, end, epsilon, b - 0.1)
-    #
-    # markvardt.newton_method_atan_right_network(start, end, epsilon, a + 0.1)
-    # markvardt.newton_method_atan_right_network(start, end, epsilon, a - 0.1)
-    # markvardt.newton_method_atan_right_network(start, end, epsilon, b + 0.1)
-    # markvardt.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
+    markvardt.newton_method_atan(start, end, epsilon, a + 0.1)
+    markvardt.newton_method_atan(start, end, epsilon, a - 0.1)
+    markvardt.newton_method_atan(start, end, epsilon, b + 0.1)
+    markvardt.newton_method_atan(start, end, epsilon, b - 0.1)
+
+    markvardt.newton_method_atan_central_network(start, end, epsilon, a + 0.01)
+    markvardt.newton_method_atan_central_network(start, end, epsilon, a - 0.1)
+    markvardt.newton_method_atan_central_network(start, end, epsilon, b + 0.1)
+    markvardt.newton_method_atan_central_network(start, end, epsilon, b - 0.1)
+
+    markvardt.newton_method_atan_left_network(start, end, epsilon, a + 0.1)
+    markvardt.newton_method_atan_left_network(start, end, epsilon, a - 0.1)
+    markvardt.newton_method_atan_left_network(start, end, epsilon, b + 0.1)
+    markvardt.newton_method_atan_left_network(start, end, epsilon, b - 0.1)
+
+    markvardt.newton_method_atan_right_network(start, end, epsilon, a + 0.1)
+    markvardt.newton_method_atan_right_network(start, end, epsilon, a - 0.1)
+    markvardt.newton_method_atan_right_network(start, end, epsilon, b + 0.1)
+    markvardt.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
 
 
     start = 0
@@ -381,7 +405,6 @@ def main():
     end = 12
     plot_func(start, end, brute_force_cos, epsilon, func=cos_func)
     plot_func(start, end, brokens_method_cos, epsilon, func=cos_func)
-
 
 
 if __name__ == "__main__":
