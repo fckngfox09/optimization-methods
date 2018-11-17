@@ -64,24 +64,35 @@ def rafson_mod(func, start, end, epsilon, show_chart=False, f_diff_method=defaul
 
     x0 = x_start
     df = 1
-    df_old = df
 
     iter_count = 1
-    while np.abs(df) > epsilon:
 
-        if show_chart:
-            plt.scatter(x0, func.subs(x_sym, x0), color='red')
+    test_x = lambda l: l * np.arctan(l) - (1 / 2) * np.log(1 + l * l)
+    test_df = lambda dl: np.arctan(dl)
+    test_ddf = lambda ddl: (1 + ddl ** 2) ** -1
 
-        dff = float(f_diff_diff_method(func, x0))
-        df = float(f_diff_method(func, x0))
-        t = df ** 2 / (df ** 2 + f_diff_method(func, (x0 - float(df) / float(dff))))
-        x0 -= t * float(df) / float(dff)
+    df_old = test_df(x0)
+    while np.abs(test_df(x0)) > epsilon:
+        #
+        # if show_chart:
+        #     plt.scatter(x0, func.subs(x_sym, x0), color='red')
+        #
+        x_l = x0 - test_df(x0)/ test_ddf(x0)
+        tk = (test_df(x0) ** 2) / (test_df(x0) ** 2 + test_df(x_l) ** 2)
+        xn = x0 - tk * (test_df(x0) / test_ddf(x0))
 
-        if iter_count > 0 and np.abs(df) > df_old:
+
+        # dff = float(f_diff_diff_method(func, x0))
+        # df = float(f_diff_method(func, x0))
+        # t = df ** 2 / (df ** 2 + f_diff_method(func, (x0 - float(df) / float(dff))) ** 2)
+        # x0 -= t * float(df) / float(dff)
+
+        if iter_count > 0 and np.abs(test_df(xn)) > np.abs(df_old):
             error = 'Метод не сошёлся.'
             return error, 0
 
-        df_old = np.abs(df)
+        x0 = xn
+        df_old = np.abs(test_df(x0))
         iter_count += 1
 
     return float(func.subs(x_sym, x0)), iter_count
@@ -103,33 +114,43 @@ def markvardt_mod(func, start, end, epsilon, show_chart=False, f_diff_method=def
     iter_count = 1
     old_iter_count = iter_count
 
-    while np.abs(df) > epsilon:
-        df_old = np.abs(df)
-        if show_chart:
-            plt.scatter(x0, func.subs(x_sym, x0), color='red')
+    test_x = lambda l: l*np.arctan(l) - 1/2 * np.log(1 + l*l)
+    test_df = lambda dl : np.arctan(dl)
+    test_ddf = lambda ddl: (1+ddl ** 2) ** -1
 
-        old_x = x0
+    while np.abs(test_df(x0)) > epsilon:
+        df_old = np.abs(test_df(x0))
+        # if show_chart:
+        #     plt.scatter(x0, func.subs(x_sym, x0), color='red')
 
-        dff = float(f_diff_diff_method(func, old_x))
-        df = float(f_diff_method(func, old_x))
-
-        delta = float(df) / (float(dff) + float(mu))
-        x0 = old_x - delta
-
-        # Эта проверка не работает, хотя взята с учебника.
-        # if func.subs(x_sym, x0) < func.subs(x_sym, old_x):
-        #     mu /= 2
-        #     iter_count += 1
-        # else:
-        #     mu *= 2
+        # old_x = x0
         #
-        if delta > 0:
+        # dff = float(f_diff_diff_method(func, old_x))
+        # df = float(f_diff_method(func, old_x))
+        #
+        # delta = float(df) / (float(dff) + float(mu))
+        # x0 = old_x - delta
+
+        x_n = x0 - float(test_df(x0)) / (float(test_ddf(x0)) + mu)
+
+        if test_x(x_n) < test_x(x0):
             mu /= 2
         else:
             mu *= 2
 
-        if iter_count > 0 and np.abs(df) >= df_old:
+        x0 = x_n
+
+        iter_count += 1
+
+        #
+        # if delta > 0:
+        #     mu /= 2
+        # else:
+        #     mu *= 2
+        #
+        if iter_count > 100:
             error = 'Метод не сошёлся.'
+            print(error)
             return error, 0
 
     return float(func.subs(x_sym, x0)), iter_count

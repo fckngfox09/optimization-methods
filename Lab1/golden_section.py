@@ -12,11 +12,11 @@ def count(func, start, end, epsilon, show_chart=False):
 
     y1 = func(x1)
     y2 = func(x2)
+    iter_count = 2
 
     tau = (np.sqrt(5) - 1) / 2
     epsilon_n = (b - a) / 2
 
-    iter_count = 1
     while epsilon_n > epsilon:
         a, b, x1, y1, x2, y2, epsilon_n = on_count(func, a, b, x1, y1, x2, y2, tau)
         iter_count += 1

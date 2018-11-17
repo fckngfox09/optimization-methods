@@ -17,7 +17,7 @@ def count(func, start, end, epsilon, show_chart=False):
 
     x0, x1, x2, x3, f1, f2, f3 = on_count(func, x1, x2, x3, f1, f2, f3, a, b, show_chart)
 
-    iter_count = 1
+    iter_count = 4
     while True:
         x_iter, x1, x2, x3, f1, f2, f3 = on_count(func, x1, x2, x3, f1, f2, f3, a, b, show_chart)
         delta = np.abs((x0 - x_iter))

@@ -26,7 +26,8 @@ x_sym = sp.symbols('x')
 
 func_atan = lambda x: x * np.arctan(x) - np.log(1 + (x ** 2)) / 2
 
-func_original = lambda x: (x ** 4 + x ** 2 + x + 1)
+# func_original = lambda x: (x ** 4 + x ** 2 + x + 1)
+func_original = lambda x: (x ** 2)
 # func = (lambda x: x ** 4 + np.exp(-x))
 cos_func = lambda x: (np.cos(x) / (x ** 2))
 cos_func_diff = lambda x: -np.sin(x)/x**2 - 2*np.cos(x)/x**3
@@ -250,30 +251,31 @@ def brute_force_sin(start, end, epsilon, show_chart):
 
 def brokens_method_cos(start, end, epsilon, show_chart):
     name = 'Метод ломанных для косинуса'
-    y_min = brokens_method.count(cos_func, start, end, epsilon, show_chart=show_chart)
+    y_min = brokens_method.count(cos_func, start, end, epsilon, show_chart=False)
     print(name, y_min)
     plt.title(name)
 
 
 def brokens_method_sin(start, end, epsilon, show_chart):
     name = 'Метод ломанных для косинуса'
-    y_min = brokens_method.count(sin_func, start, end, epsilon, show_chart=show_chart)
+    y_min = brokens_method.count(sin_func, start, end, epsilon, show_chart=False)
     print(name, y_min)
     plt.title(name)
 
 
 # ДЛя дебага.
 def main():
-    # start = -1.5
-    # end = 1.5
-    # epsilon = 0.0001
-    # show_chart = True
+    start = -1.5
+    end = 1.5
+    epsilon = 0.01
+    show_chart = True
     # #
     # plot_func(start, end, brute_force_method, epsilon, show_chart)
     # plot_func(start, end, bitwise_method, epsilon, show_chart)
     # plot_func(start, end, dihotomy_method, epsilon, show_chart)
     # plot_func(start, end, golden_section_method, epsilon, show_chart)
     # plot_func(start, end, parabole_method, epsilon, show_chart)
+    # print('')
     #
     # plot_func(start, end, middle_point_method, epsilon, show_chart)
     # plot_func(start, end, middle_point_method_central_network, epsilon, show_chart)
@@ -374,13 +376,14 @@ def main():
     # plt.draw()
     # plt.pause(0.01)
     # plt.show()
+    # print('')
     #
-    # #
+    #
     # markvardt.newton_method_atan(start, end, epsilon, a + 0.1)
     # markvardt.newton_method_atan(start, end, epsilon, a - 0.1)
     # markvardt.newton_method_atan(start, end, epsilon, b + 0.1)
     # markvardt.newton_method_atan(start, end, epsilon, b - 0.1)
-    #
+
     # markvardt.newton_method_atan_central_network(start, end, epsilon, a + 0.01)
     # markvardt.newton_method_atan_central_network(start, end, epsilon, a - 0.1)
     # markvardt.newton_method_atan_central_network(start, end, epsilon, b + 0.1)
@@ -397,37 +400,39 @@ def main():
     # markvardt.newton_method_atan_right_network(start, end, epsilon, b - 0.1)
     #
     #
-    # start = 0
-    # end = 4
+    start = 0
+    end = 4
     # plot_func(start, end, brute_force_sin, epsilon, func=sin_func)
-    # plot_func(start, end, brokens_method_sin, epsilon, func=sin_func)
+    plot_func(start, end, brokens_method_sin, epsilon, func=sin_func)
     #
-    # start = 1
-    # end = 12
+    start = 1
+    end = 12
     # plot_func(start, end, brute_force_cos, epsilon, func=cos_func)
-    # plot_func(start, end, brokens_method_cos, epsilon, func=cos_func)
+    plot_func(start, end, brokens_method_cos, epsilon, func=cos_func)
 
-    iter = 0
-    start = -1.5
-    end = 1.5
-    epsilon = 0.1
-    show_charts = False
-    while iter < 5:
-        print('Погрешность, ', epsilon)
+    print(' ')
 
-        brute_force_method(start, end, epsilon, show_charts)
-        bitwise_method(start, end, epsilon, show_charts)
-        dihotomy_method(start, end, epsilon, show_charts)
-        golden_section_method(start, end, epsilon, show_charts)
-        parabole_method(start, end, epsilon, show_charts)
-        middle_point_method(start, end, epsilon, show_charts)
-        chord_method(start, end, epsilon, show_charts)
-        newton_method(start, end, epsilon, show_charts)
+    # iter = 0
+    # start = -1.5
+    # end = 1.5
+    # epsilon = 0.1
+    # show_charts = False
+    # while iter < 5:
+    #     print('Погрешность, ', epsilon)
 
-        epsilon /= 10
-        iter += 1
+        # brute_force_method(start, end, epsilon, show_charts)
+        # bitwise_method(start, end, epsilon, show_charts)
+        # dihotomy_method(start, end, epsilon, show_charts)
+        # golden_section_method(start, end, epsilon, show_charts)
+        # parabole_method(start, end, epsilon, show_charts)
+        # middle_point_method(start, end, epsilon, show_charts)
+        # chord_method(start, end, epsilon, show_charts)
+        # newton_method(start, end, epsilon, show_charts)
 
-        print(' ')
+        # epsilon /= 10
+        # iter += 1
+        #
+        # print(' ')
 
 
 if __name__ == "__main__":

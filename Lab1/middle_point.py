@@ -18,13 +18,14 @@ def count(func, start, end, epsilon, show_chart=False, f_diff_method=default_cou
 
     left_diff = f_diff_method(func, a)
     right_diff = f_diff_method(func, b)
+    iter_count = 2
 
     if not (left_diff * right_diff < 0):
         return 'На концах в производной одинаковые знаки.'
 
     df, x0 = on_count(f_diff_method, func, a, b)
+    iter_count += 1
 
-    iter_count = 1
     step = 0.2
     while np.abs(df) > epsilon:
         if df > 0:

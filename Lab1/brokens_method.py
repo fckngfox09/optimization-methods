@@ -13,9 +13,11 @@ def count(func, start, end, epsilon, show_chart=False, is_cos=True):
 
     f_a = func(a)
     f_b = func(b)
+    iter_count = 2
 
     L = -minimize(lambda x: -np.abs(dn.lambda_central_network(func, x)), a, tol=10**(-5)).fun
-
+    print('LIP: ', L)
+    L *= 500
     x_0 = (f_a - f_b + L * (a + b)) / (2 * L)
 
     y_0 = (f_a + f_b + L * (a - b)) / 2
@@ -25,12 +27,12 @@ def count(func, start, end, epsilon, show_chart=False, is_cos=True):
 
     delta = (func(x_0) - y_0) / (2 * L)
 
-    iter_count = 1
     while not 2 * L * delta < epsilon:
         delta, pair, x_0 = on_count(func, pair, L)
         iter_count += 1
 
     y_min = func(x_0)
+    iter_count += 1
     plt.scatter(x_0, y_min)
 
     return y_min

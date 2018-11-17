@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 def count(func, start, end, delta, epsilon, show_chart=False):
     x = start
     y = func(x)
+    iter_count = 1
 
     x_old = x
     y_old = y
-    iter_count = 0
 
     mul_const = -4
 

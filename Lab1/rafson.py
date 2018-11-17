@@ -109,6 +109,9 @@ def find_range_numerically(start, end, epsilon):
             print('Счёт идёт, никто не заглох...', timer_emu)
         timer_emu += 1
 
+        if (y_min == 'Метод не сошёлся.'):
+            return -1,-1
+
     x_arr = np.arange(min_a, min_b, 0.01)
     plt.plot(x_arr, func(x_arr))
 
